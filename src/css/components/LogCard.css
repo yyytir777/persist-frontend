@@ -24,11 +24,13 @@
 }
 
 .LogCardImage {
+    object-fit: cover;
     width: 100%;
     height: 500px;
 }
 
 .Preview {
+    height: auto;
     overflow: hidden; 
     text-overflow: ellipsis;
 }
