@@ -1,0 +1,34 @@
+
+.LogCard {
+    width: 100%;
+    height: 400px;
+    background-color: gray;
+    gap: 20px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.upper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.author {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.LogCardImage {
+    width: 100%;
+    height: 500px;
+}
+
+.Preview {
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}

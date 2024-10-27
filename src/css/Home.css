@@ -1,0 +1,43 @@
+
+.Home {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.MainWrapper {
+    width: 100%;
+    height: 100%;
+    padding: 0px 10%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.SearchBarWrapper {
+    width: 100%;
+    height: 256px;
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.SearchBar {
+    width: 60%;
+    height: 50px;
+    background-color: aqua;
+}
+
+.LogGrid {
+    padding-top: 30px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* 고정된 너비 */
+    gap: 20px; /* 카드 사이의 간격 */
+    justify-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
