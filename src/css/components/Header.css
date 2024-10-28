@@ -1,5 +1,7 @@
 .HeaderContainer {
     width: 100%;
+    position: sticky;
+    top: 0;
 }
 
 .HeaderWrapper {
@@ -9,8 +11,6 @@
     padding: 10px 10%;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
-    top: 0;
 }
 
 .HeaderImage {

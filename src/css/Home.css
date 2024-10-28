@@ -28,14 +28,14 @@
 .SearchBar {
     width: 60%;
     height: 50px;
-    background-color: aqua;
+    background-color: whitesmoke;
 }
 
 .LogGrid {
     padding-top: 30px;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* 고정된 너비 */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 고정된 너비 */
     gap: 20px; /* 카드 사이의 간격 */
     justify-items: center;
     justify-content: center;

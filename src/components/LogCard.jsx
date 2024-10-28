@@ -5,12 +5,12 @@ import image from "../img/image.png";
 export default function LogCard() {
     return(
         <div className="LogCard">
-            <div className="upper">
-                <div className="author">
-                    <img className="image" src="" alt=""/>
-                    <div className="name">author</div>
+            <div className="Upper">
+                <div className="Author">
+                    <img className="AuthorImage" src={image} alt=""/>
+                    <div className="Name">author</div>
                 </div>
-                <div className="date">2024.10.10</div>
+                <div className="Date">2024.10.10</div>
             </div>
             <img className="LogCardImage" src={image} alt="Log Thumbnail"/>
             <div className="Title">Demo title</div>
