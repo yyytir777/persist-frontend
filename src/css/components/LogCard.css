@@ -44,6 +44,7 @@
 
 .Title {
     padding: 10px 5%;
+    height: auto;
     font-size: xx-large;
     border-top: 1px solid rgb(215, 215, 215);
     white-space: nowrap;
@@ -52,9 +53,8 @@
 }
 
 .Preview {
-    margin: 10px;
-    padding: 0px 5%;
-    height: auto;
+    padding: 10px 5%;
+    flex: 1;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;

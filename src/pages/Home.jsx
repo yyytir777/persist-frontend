@@ -6,7 +6,7 @@ import LogCard from '../components/LogCard';
 
 export default function Home() {
 
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTczMDE4NjQ0OCwiZXhwIjoxNzMwMTkyNDQ4LCJtZW1iZXJJZCI6ImY5MjhmZjVjLTNhYjEtNDUxNy1iMDUwLTY0YTQwYmUwMDY0NCIsImVtYWlsIjoieXl5dGlyNzc3QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIn0.fCvtCQiOfV5N0y7GueY2kdxIqWXpIeyC6UN-SikQ5Wo';
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTczMDIwNTY5NiwiZXhwIjoxNzMwMjExNjk2LCJtZW1iZXJJZCI6IjI5ZjYxYjlhLWQ1ZTQtNGFmMi1hMGQ0LWJlMWNlMzNlYzYzNyIsImVtYWlsIjoieXl5dGlyNzc3QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIn0.VDogEc0HTaTxMlbVGeIhx3T2Vqg7286KL8Wi_jCZho4';
     const [logs, setLogs] = useState([]);
     const [query, setQuery] = useState('');
 
@@ -40,24 +40,22 @@ export default function Home() {
     
     return(
         <div className="Home">
-            <div className="MainWrapper">
-                <div className="SearchBarWrapper">
-                    <div className="SearchBar">
-                        <input
-                            type="text"
-                            placeholder="Search..."
-                            value={query}
-                            onChange={handleInputChange}/>
-                        <button onClick={search}>Search</button>
-                    </div>
+            <div className="SearchBarWrapper">
+                <div className="SearchBar">
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={query}
+                        onChange={handleInputChange}/>
+                    <button onClick={search}>Search</button>
                 </div>
-                <div className="LogGrid">
-                    {
-                        logs.map((log) => (
-                            <LogCard key={log.id} {...log} />
-                        ))
-                    }
-                </div>
+            </div>
+            <div className="LogGrid">
+                {
+                    logs.map((log) => (
+                        <LogCard key={log.id} {...log} />
+                    ))
+                }
             </div>
         </div>
     );

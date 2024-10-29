@@ -7,9 +7,13 @@ import Home from './pages/Home';
 
 const Root = styled.div`
     width: 100%;
-    height: auto;
-
+    height: 100vh;
+    display: flex;
     flex-direction: column;
+`;
+
+const Content = styled.div`
+    
 `;
 
 function App() {
@@ -17,12 +21,13 @@ function App() {
         <Root>
             <BrowserRouter>
                 <Header />
+                <Content>
+                    <Routes>
+                        <Route path='/' element={<Home />}/>
+                    </Routes>
 
-                <Routes>
-                    <Route path='/' element={<Home />}/>
-                </Routes>
-
-                <Footer />
+                    <Footer />
+                </Content>
             </BrowserRouter>
         </Root>
     );
