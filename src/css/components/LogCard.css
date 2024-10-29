@@ -3,18 +3,23 @@
     width: 100%;
     height: 400px;
     background-color: whitesmoke;
-
+    border-radius: 2%;
     display: flex;
     flex-direction: column;
 }
 
+.LogCard:hover {
+    box-shadow: 0 8px 16px rgba(0, 0.05, 0.05, 0.05); /* 그림자 강도를 높여 강조 */
+}
+
+
 .Upper {
-    margin: 10px;
-    padding: 0px 5%;
+    padding: 10px 5%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid rgb(215, 215, 215);
 }
 
 .AuthorImage {
@@ -23,11 +28,10 @@
 }
 
 .Author {
-    padding: 0px 5%;
     width: auto;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-end;
     gap: 5px;
 }
 
@@ -36,15 +40,19 @@
     object-position: center;
     width: 100%;
     height: 200px;
-    
 }
 
 .Title {
-    margin: 10px;
-    padding: 0px 5%;
+    padding: 10px 5%;
     font-size: xx-large;
+    border-top: 1px solid rgb(215, 215, 215);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
 .Preview {
+    margin: 10px;
     padding: 0px 5%;
     height: auto;
     overflow: hidden;
