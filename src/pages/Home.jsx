@@ -7,7 +7,8 @@ import SearchBar from '../components/SearchBar';
 
 export default function Home() {
 
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTczMDI2OTE2NSwiZXhwIjoxNzMwMjc1MTY1LCJtZW1iZXJJZCI6ImY5MjhmZjVjLTNhYjEtNDUxNy1iMDUwLTY0YTQwYmUwMDY0NCIsImVtYWlsIjoieXl5dGlyNzc3QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIn0.sC6kftyF_no1mZaqpLnkSrTOFVPOqV1oN7d0eqzt_78';
+    const token = localStorage.getItem('accessToken');
+    console.log(token);
     const [logs, setLogs] = useState([]);
     
     useEffect(() => {
@@ -28,7 +29,7 @@ export default function Home() {
         };
 
         fetchLogs();
-    }, []);
+    }, [token]);
     
     return(
         <div className="Home">
