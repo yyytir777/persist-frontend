@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import NotFoundPage from './pages/NotFoundPage';
+import Login from './pages/Login';
 
 const Root = styled.div`
     width: 100%;
@@ -13,7 +15,7 @@ const Root = styled.div`
 `;
 
 const Content = styled.div`
-    
+    height: 100%;
 `;
 
 function App() {
@@ -24,6 +26,10 @@ function App() {
                 <Content>
                     <Routes>
                         <Route path='/' element={<Home />}/>
+                        <Route path='/login' element={<Login />}/>
+                        {/* 404 page */}
+                        <Route path="*" element={<NotFoundPage />} />
+
                     </Routes>
 
                     <Footer />

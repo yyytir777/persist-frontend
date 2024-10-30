@@ -2,21 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import '../css/Home.css';
 import LogCard from '../components/LogCard';
+import SearchBar from '../components/SearchBar';
 
 
 export default function Home() {
 
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTczMDIwNTY5NiwiZXhwIjoxNzMwMjExNjk2LCJtZW1iZXJJZCI6IjI5ZjYxYjlhLWQ1ZTQtNGFmMi1hMGQ0LWJlMWNlMzNlYzYzNyIsImVtYWlsIjoieXl5dGlyNzc3QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIn0.VDogEc0HTaTxMlbVGeIhx3T2Vqg7286KL8Wi_jCZho4';
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTczMDI2OTE2NSwiZXhwIjoxNzMwMjc1MTY1LCJtZW1iZXJJZCI6ImY5MjhmZjVjLTNhYjEtNDUxNy1iMDUwLTY0YTQwYmUwMDY0NCIsImVtYWlsIjoieXl5dGlyNzc3QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIn0.sC6kftyF_no1mZaqpLnkSrTOFVPOqV1oN7d0eqzt_78';
     const [logs, setLogs] = useState([]);
-    const [query, setQuery] = useState('');
-
-    const handleInputChange = (event) => {
-        setQuery(event.target.value);
-    };
-    
-    const search = () => {
-        
-    };
     
     useEffect(() => {
         const fetchLogs = async () => {
@@ -41,15 +33,9 @@ export default function Home() {
     return(
         <div className="Home">
             <div className="SearchBarWrapper">
-                <div className="SearchBar">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        value={query}
-                        onChange={handleInputChange}/>
-                    <button onClick={search}>Search</button>
-                </div>
+                <SearchBar></SearchBar>
             </div>
+
             <div className="LogGrid">
                 {
                     logs.map((log) => (
