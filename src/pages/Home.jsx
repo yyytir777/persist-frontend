@@ -12,7 +12,7 @@ export default function Home() {
     const [logs, setLogs] = useState([]);
     
     useEffect(() => {
-        const fetchLogs = async () => {
+        const fetchLogs = async (retry = false) => {
             try {
                 const response = await axios.get('http://localhost:8080/api/v1/log/', {
                     headers: {
@@ -21,15 +21,19 @@ export default function Home() {
                         'Content-Type' : 'application/json'
                     }
                 });
-                console.log(response.data);
-                setLogs(response.data.result);
 
-                if(response.data.code === 'T002') {
-                    console.log("accessToken Expired");
-                    accessTokenReissueApi();
+                console.log('response.data', response.data);
+
+                if(response.data.code === 'T002' && !retry) {
+                    await accessTokenReissueApi();
+                    fetchLogs(true);
 
                 } else if(response.data.code === 'T005') {
                     console.log("refreshToken Expired");
+                    window.location.href = '/login';
+                }
+                else {
+                    setLogs(Array.isArray(response.data.result) ? response.data.result : []);
                 }
             } catch (error) {
                 console.log('Failed to fetch logs : ', error);
