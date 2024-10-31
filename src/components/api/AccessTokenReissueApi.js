@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const URL = localStorage.getItem('URL');
+const URL = 'http://localhost:8080';
 
-const tokenReissueApi = async () => {
+const accessTokenReissueApi = async () => {
     const refreshToken = localStorage.getItem('refreshToken');
+    console.log('URL : ', URL);
     try {
         const response = await axios.post(`${URL}/api/v1/token/reissue`, {
             headers: {
@@ -12,11 +13,10 @@ const tokenReissueApi = async () => {
             }
         });
         console.log('accessToken was reissued')
-        localStorage.removeItem('accessToken');
         localStorage.setItem('accessToken', response.data.result.accessToken);
     } catch (error) {
-        console.error(error.response.data);
+        console.error(error.response);
     }
 };
 
-export default tokenReissueApi;
+export default accessTokenReissueApi;

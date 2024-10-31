@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function LoginHandler(props) {
+export default function LoginHandler() {
 
     const navigate = useNavigate();
     const code = new URL(window.location.href).searchParams.get('code');
@@ -16,7 +16,6 @@ export default function LoginHandler(props) {
                     "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
                 },
             }).then((res) => {
-                console.log(res.data);
                 const accessToken = res.data.result.accessToken;
                 const refreshToken = res.data.result.refreshToken;
                 console.log('accessToken', accessToken);
