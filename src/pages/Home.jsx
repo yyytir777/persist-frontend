@@ -7,41 +7,38 @@ import accessTokenReissueApi from "../components/api/AccessTokenReissueApi";
 
 
 export default function Home() {
-
-    const token = localStorage.getItem('accessToken');
     const [logs, setLogs] = useState([]);
     
     useEffect(() => {
-        const fetchLogs = async (retry = false) => {
+        const fetchLogs = async () => {
+        const token = localStorage.getItem('accessToken');
+
             try {
-                const response = await axios.get('http://localhost:8080/api/v1/log/', {
+                const response = await axios.get('http://localhost:8080/api/v1/log/all', {
                     headers: {
                         'accept': '*/*',
                         'Authorization' : `Bearer ${token}`,
                         'Content-Type' : 'application/json'
                     }
                 });
+                
+                console.log('response of /api/v1/log/all : ', response.data);
+                setLogs(Array.isArray(response.data.result) ? response.data.result : []);
 
-                console.log('response.data', response.data);
-
-                if(response.data.code === 'T002' && !retry) {
+                if (response.data.code === 'T002') {
                     await accessTokenReissueApi();
-                    fetchLogs(true);
-
-                } else if(response.data.code === 'T005') {
-                    console.log("refreshToken Expired");
+                    fetchLogs();
+                } else if (response.data.code === 'T005') {
+                    localStorage.removeItem('accessToken');
                     window.location.href = '/login';
                 }
-                else {
-                    setLogs(Array.isArray(response.data.result) ? response.data.result : []);
-                }
             } catch (error) {
-                console.log('Failed to fetch logs : ', error);
+                console.log(error.response);
             }
         };
 
         fetchLogs();
-    }, [token]);
+    }, []);
     
     return(
         <div className="Home">

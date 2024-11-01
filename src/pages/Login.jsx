@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import googleLoignImg from '../img/login/google_login_button.png';
+import kakaoLoginImg from '../img/login/kakao_login_medium_narrow.png';
 
 const LoginWrapper = styled.div`
     width: 100%;
@@ -24,10 +25,20 @@ export default function Login() {
         window.location.href = loginURL;
     };
 
+    const HandlerClickKakaoLogin = () => {
+        const link = `https://kauth.kakao.com/oauth/authorize`;
+        const clientId = '30f5f1287dfee3c347207686fc8af85f';
+        const redirectURL = 'http://localhost:3000/oauth/callback/kakao';
+        const loginURL = `${link}?client_id=${clientId}&redirect_uri=${redirectURL}&response_type=code`;
+
+        window.location.href = loginURL;
+    };
+
     return (
         <LoginWrapper>
             <h2>Google Login</h2>
             <img src={googleLoignImg} alt="googleLogin" onClick={HandlerClickGoogleLogin} />
+            <img src={kakaoLoginImg} alt="kakaoLogin" onClick={HandlerClickKakaoLogin} />
         </LoginWrapper>
     );
 }

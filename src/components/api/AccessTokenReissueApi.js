@@ -14,7 +14,6 @@ const accessTokenReissueApi = async () => {
         );
         console.log(response.data.result);
         localStorage.setItem('accessToken', response.data.result.accessToken);
-        return response.data.result.accessToken;
     } catch (error) {
         console.error(error.response);
     }
