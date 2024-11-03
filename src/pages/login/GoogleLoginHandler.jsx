@@ -11,7 +11,7 @@ export default function GoogleLoginHandler({ onLoginSuccess }) {
         const getToken = async() => {
             await axios({
                 method: "GET",
-                url: `http://localhost:8080/oauth/callback/google?code=${code}`,
+                url: `http://43.203.89.62:8080/oauth/callback/google?code=${code}`,
                 headers: {
                     "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
                 },

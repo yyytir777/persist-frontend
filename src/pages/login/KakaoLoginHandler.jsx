@@ -11,7 +11,7 @@ export default function KakaoLoginHandler({ onLoginSuccess }) {
         const getToken = async() => {
             await axios({
                 method: "GET",
-                url: `http://localhost:8080/oauth/callback/kakao?code=${code}`,
+                url: `http://43.203.89.62:8080/oauth/callback/kakao?code=${code}`,
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
                 }

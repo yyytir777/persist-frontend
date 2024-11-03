@@ -35,7 +35,7 @@ export default function Home({ setIsLogIn }) {
         }
 
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/log/all', {
+            const response = await axios.get('http://43.203.89.62:8080/api/v1/log/all', {
                 headers: {
                     'accept': '*/*',
                     'Authorization': `Bearer ${accessToken}`,
