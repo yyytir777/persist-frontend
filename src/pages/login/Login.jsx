@@ -24,7 +24,7 @@ export default function Login() {
     const HandlerClickGoogleLogin = () => {
         const link = `https://accounts.google.com/o/oauth2/v2/auth`;
         const clientId = '737775759701-5sab54jiavt4hdil7pc8ns155cbuv67j.apps.googleusercontent.com';
-        const redirectURL = 'http://persist-frontend-one.vercel.app/:3000/oauth/callback/google';
+        const redirectURL = 'http://persist-frontend-one.vercel.app/oauth/callback/google';
         const loginURL = `${link}?client_id=${clientId}&redirect_uri=${redirectURL}&response_type=code&scope=email`;
 
         window.location.href = loginURL;
@@ -33,7 +33,7 @@ export default function Login() {
     const HandlerClickKakaoLogin = () => {
         const link = `https://kauth.kakao.com/oauth/authorize`;
         const clientId = '30f5f1287dfee3c347207686fc8af85f';
-        const redirectURL = 'http://persist-frontend-one.vercel.app/:3000/oauth/callback/kakao';
+        const redirectURL = 'http://persist-frontend-one.vercel.app/oauth/callback/kakao';
         const loginURL = `${link}?client_id=${clientId}&redirect_uri=${redirectURL}&response_type=code`;
 
         window.location.href = loginURL;
