@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function GoogleLoginHandler() {
+export default function GoogleLoginHandler({ onLoginSuccess }) {
 
     const navigate = useNavigate();
     const code = new URL(window.location.href).searchParams.get('code');
@@ -18,16 +18,21 @@ export default function GoogleLoginHandler() {
             }).then((res) => {
                 const accessToken = res.data.result.accessToken;
                 const refreshToken = res.data.result.refreshToken;
-
-                console.log('accessToken', accessToken);
-                console.log('refreshToken', refreshToken);
-                localStorage.setItem('accessToken', accessToken);
-                localStorage.setItem('refreshToken', refreshToken);
-                navigate("/");
+                
+                if(!accessToken || !refreshToken) {
+                    navigate("/login");
+                } else {
+                    console.log('accessToken', accessToken);
+                    console.log('refreshToken', refreshToken);
+                    localStorage.setItem('accessToken', accessToken);
+                    localStorage.setItem('refreshToken', refreshToken);
+                    onLoginSuccess(); // loggedIn = true
+                    navigate("/");    
+                }
             });
         };
         getToken();
-    }, [code, navigate]);
+    }, [code, navigate, onLoginSuccess]);
 
     return(
         <>

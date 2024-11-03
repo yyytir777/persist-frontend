@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import '../css/NotFoundPage.css';
 
 const NotFoundWrapper = styled.div`
     height: 100%;

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import googleLoignImg from '../img/login/google_login_button.png';
-import kakaoLoginImg from '../img/login/kakao_login_medium_narrow.png';
+import googleLoignImg from '../../img/login/google_login_button.png';
+import kakaoLoginImg from '../../img/login/kakao_login_medium_narrow.png';
 
 const LoginWrapper = styled.div`
     width: 100%;
@@ -10,8 +10,13 @@ const LoginWrapper = styled.div`
     padding-bottom: 100px;
     display: flex;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+`;
+
+const ProviderWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
 
 export default function Login() {
@@ -36,9 +41,14 @@ export default function Login() {
 
     return (
         <LoginWrapper>
-            <h2>Google Login</h2>
-            <img src={googleLoignImg} alt="googleLogin" onClick={HandlerClickGoogleLogin} />
-            <img src={kakaoLoginImg} alt="kakaoLogin" onClick={HandlerClickKakaoLogin} />
+            <ProviderWrapper>
+                <h2>Google Login</h2>
+                <img src={googleLoignImg} alt="googleLogin" onClick={HandlerClickGoogleLogin} />
+            </ProviderWrapper>
+            <ProviderWrapper>
+                <h2>Kakao Login</h2>
+                <img src={kakaoLoginImg} alt="kakaoLogin" onClick={HandlerClickKakaoLogin} />
+            </ProviderWrapper>
         </LoginWrapper>
     );
 }

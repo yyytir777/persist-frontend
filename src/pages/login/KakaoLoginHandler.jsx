@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function KakaoLoginHandler() {
+export default function KakaoLoginHandler({ onLoginSuccess }) {
 
     const navigate = useNavigate();
     const code = new URL(window.location.href).searchParams.get('code');
@@ -23,11 +23,12 @@ export default function KakaoLoginHandler() {
                 console.log('refreshToken', refreshToken);
                 localStorage.setItem('accessToken', accessToken);
                 localStorage.setItem('refreshToken', refreshToken);
+                onLoginSuccess();
                 navigate('/');
             });
         };
         getToken();
-    }, [code, navigate]);
+    }, [code, navigate, onLoginSuccess]);
 
     return(
         <>

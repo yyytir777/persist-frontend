@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from 'axios';
-import SearchBar from '../components/SearchBar';
-import accessTokenReissueApi from "../components/api/AccessTokenReissueApi";
 import LogGrid from "../components/LogGrid";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import accessTokenReissueApi from "../components/api/AccessTokenReissueApi";
 
 const HomeWrapper = styled.div`
     width: 100%;
@@ -15,7 +15,7 @@ const HomeWrapper = styled.div`
     align-items: center;
 `;
 
-const SearchBarWrapper = styled.div`
+const MemberWrapper = styled.div`
     width: 100%;
     height: 300px;
     display: flex;
@@ -23,19 +23,45 @@ const SearchBarWrapper = styled.div`
     align-items: center;
 `;
 
-export default function Home({ setIsLogIn }) {
+export default function MemberPage( {setIsLogIn} ) {
     const [logs, setLogs] = useState([]);
+    const navigate = useNavigate();
 
-    const fetchLogs = useCallback(async () => {
+    const fetchMemberId = async () => {
+        const URL = localStorage.getItem('URL');
         const accessToken = localStorage.getItem('accessToken');
 
-        if (!accessToken) {
+        if(!accessToken) {
+            navigate('/login');
+            return;
+        }
+
+        try {
+            const response = await axios.get(`${URL}/api/v1/token/memberId`, {
+                headers: {
+                    Accept: '*/*',
+                    Authorization: `Bearer ${accessToken}`,
+                    'Content-type': 'application/json'
+                    }
+            });
+            return response;
+        } catch(error) {
+            console.log(error.reponse);
+        }
+    }
+
+    const fetchLogs = useCallback(async () => {
+        const URL = localStorage.getItem('URL');
+        const accessToken = localStorage.getItem('accessToken');
+        const memberId = fetchMemberId()?.data.result;
+
+        if(!accessToken) {
             console.log('accessToken is not defined');
             return;
         }
 
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/log/all', {
+            const response = await axios.get(`${URL}/api/v1/member/${memberId}`, {
                 headers: {
                     'accept': '*/*',
                     'Authorization': `Bearer ${accessToken}`,
@@ -43,9 +69,9 @@ export default function Home({ setIsLogIn }) {
                 }
             });
 
-            console.log('response of /api/v1/log/all : ', response.data);
+            console.log('response of /api/v1/log/member/{member_id}', response.data);
             setLogs(Array.isArray(response.data.result) ? response.data.result : []);
-
+            
             if (response.data.code === 'T002') {
                 await accessTokenReissueApi(setIsLogIn);
                 fetchLogs();
@@ -53,20 +79,19 @@ export default function Home({ setIsLogIn }) {
                 localStorage.removeItem('accessToken');
                 window.location.href = '/login';
             }
-        } catch (error) {
+        } catch(error) {
             console.log(error.response);
         }
-    }, [setIsLogIn]); // setIsLogIn이 변경될 때만 새로 생성
+    }, [setIsLogIn]);
 
     useEffect(() => {
         fetchLogs();
-    }, [fetchLogs]); // fetchLogs를 의존성 배열에 추가
-    
+    }, [fetchLogs]);
+
     return(
         <HomeWrapper>
-            <SearchBarWrapper>
-                <SearchBar></SearchBar>
-            </SearchBarWrapper>
+            <MemberWrapper>
+            </MemberWrapper>
             <LogGrid logs={logs}/>
         </HomeWrapper>
     );
