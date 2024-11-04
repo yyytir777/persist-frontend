@@ -1,6 +1,8 @@
 import axios from "axios";
+import { useLoginState } from "../context/LoginContext";
 
-const accessTokenReissueApi = async (setIsLoggedIn) => {
+const useAccessTokenReissueApi = async (setIsLoggedIn) => {
+    const [,actions] = useLoginState();
     const refreshToken = localStorage.getItem('refreshToken');
     try {
         const response = await axios.post('http://43.203.89.62:8080/api/v1/token/reissue', 
@@ -14,7 +16,7 @@ const accessTokenReissueApi = async (setIsLoggedIn) => {
         );
 
         if(response.data.success === true) {
-            setIsLoggedIn(true);
+            actions.login();
             localStorage.setItem('accessToken', response.data.result.accessToken);
         }
         console.log(response.data);
@@ -25,4 +27,4 @@ const accessTokenReissueApi = async (setIsLoggedIn) => {
 
 };
 
-export default accessTokenReissueApi;
+export default useAccessTokenReissueApi;

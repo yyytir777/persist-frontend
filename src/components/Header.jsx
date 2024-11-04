@@ -8,6 +8,7 @@ import MenuBar from "./MenuBar";
 import axios from "axios";
 import accessTokenReissueApi from "./api/AccessTokenReissueApi";
 import handleHome from "./handler/handleHome";
+import { useLoginState } from "./context/LoginContext";
 
 const HeaderContainer = styled.div`
     height: 60px;
@@ -49,8 +50,9 @@ const HeaderButton = styled.button`
     height: 36px;
 `;
 
-export default function Header({ isLogIn, setIsLogIn }) {
+export default function Header() {
     
+    const [isLogin, actions] = useLoginState();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -66,7 +68,7 @@ export default function Header({ isLogIn, setIsLogIn }) {
     const handleLogout = () => {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        setIsLogIn(false);
+        actions.logout();
         window.location.href = '/';
     }
 
@@ -98,7 +100,7 @@ export default function Header({ isLogIn, setIsLogIn }) {
 
         if(response?.data.code === 'T002') {
             console.log('accessToken Expired');
-            await accessTokenReissueApi(setIsLogIn);
+            await accessTokenReissueApi();
             handleMemberPage();
         } else if (response?.data.code === 'T005') {
             alert(response?.data.errorMessage);
@@ -119,7 +121,7 @@ export default function Header({ isLogIn, setIsLogIn }) {
                 <HeaderLogo onClick={handleHome}>Persist</HeaderLogo>
                 <LogInWrapper>
                     <HeaderUserIcon src={userIcon} alt="user" onClick={handleMemberPage} />
-                    {isLogIn ? (
+                    {isLogin ? (
                         <HeaderButton onClick={handleLogout}>Logout</HeaderButton>
                     ) : (
                         <HeaderButton onClick={handleLogin}>LogIn</HeaderButton>

@@ -1,13 +1,16 @@
 import axios from "axios";
 import accessTokenReissueApi from "./AccessTokenReissueApi";
+import { useLoginState } from "../context/LoginContext";
 
-const updateToken = async (setIsLoggedIn) => {
+const useUpdateToken = async () => {
     const url = localStorage.getItem('URL');
     const accessToken = localStorage.getItem('accessToken');
 
+    const [isLogin, actions] = useLoginState();
+
     if (!accessToken) {
         console.log('accessToken is not defined');
-        setIsLoggedIn(false);
+        actions.logout();
         return;
     }
 
@@ -20,11 +23,11 @@ const updateToken = async (setIsLoggedIn) => {
             }
         });
         
-        if(response.data.success === true) setIsLoggedIn(true);
+        if(response.data.success === true) actions.login();
 
         if(response.data.code === 'T002') {
             console.log('accessToken Expired');
-            await accessTokenReissueApi(setIsLoggedIn);
+            await accessTokenReissueApi();
         } else if (response.data.code === 'T005') {
             alert(response.data.errorMessage);
             localStorage.removeItem('accessToken');
@@ -35,4 +38,4 @@ const updateToken = async (setIsLoggedIn) => {
     }
 }
 
-export default updateToken;
+export default useUpdateToken;

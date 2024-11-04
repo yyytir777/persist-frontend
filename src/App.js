@@ -12,6 +12,7 @@ import KakaoLoginHandler from './pages/login/KakaoLoginHandler';
 import updateToken from './components/api/UpdateToken';
 import SplashScreen from './pages/SplashScreen';
 import LogDetail from './components/LogDetail';
+import { LoginProvider, useLoginState } from './components/context/LoginContext';
 
 const Root = styled.div`
     overflow-y: scroll;
@@ -27,53 +28,55 @@ const Content = styled.div`
 
 function App() {
 
-    const [isLogIn, setIsLogIn] = useState(false);
+    const [isLogin, actions] = useLoginState();
     const [isLoading, setIsLoading] = useState(true);
 
     const loginSuccess = () => {
-        setIsLogIn(true);
+        actions.login();
     }
 
     useEffect(() => {
         localStorage.setItem('URL', 'http://43.203.89.62:8080');
-        updateToken(setIsLogIn).finally(() => setIsLoading(false));
+        updateToken().finally(() => actions.logout());
     }, []);
 
     // 30 분마다 자동으로 accessToken 재발급
     useEffect(() => {
-        const intervalRequest = setInterval(() => updateToken(setIsLogIn), 30 * 60 * 1000);
+        const intervalRequest = setInterval(() => updateToken(), 30 * 60 * 1000);
         return () => clearInterval(intervalRequest);
     }, []);
 
     return (
-        <Root>
-            {isLoading ? (<SplashScreen />)
-            : (
-                <BrowserRouter>
-                    <Header isLogIn={isLogIn} setIsLogIn={setIsLogIn} />
-                    <Content>
-                        <Routes>
-                            <Route path='/' element={<Home setIsLogIn={setIsLogIn} />} />
-                            <Route path='/login' element={<Login />} />
+        <LoginProvider>
+            <Root>
+                {isLoading ? (<SplashScreen />)
+                : (
+                    <BrowserRouter>
+                        <Header />
+                        <Content>
+                            <Routes>
+                                <Route path='/' element={<Home />} />
+                                <Route path='/login' element={<Login />} />
 
-                            <Route path='/logs/:id' element={<LogDetail setIsLogIn={setIsLogIn} />} />
-                            {/* <Route path='/settings' element={<Settings />} /> */}
+                                <Route path='/logs/:id' element={<LogDetail />} />
+                                {/* <Route path='/settings' element={<Settings />} /> */}
 
-                            {/* Redirect Login Handler Page */}
-                            <Route path='/oauth/callback/google' element={<GoogleLoginHandler onLoginSuccess={loginSuccess} />} />
-                            <Route path='/oauth/callback/kakao' element={<KakaoLoginHandler onLoginSuccess={loginSuccess} />} />
+                                {/* Redirect Login Handler Page */}
+                                <Route path='/oauth/callback/google' element={<GoogleLoginHandler onLoginSuccess={loginSuccess} />} />
+                                <Route path='/oauth/callback/kakao' element={<KakaoLoginHandler onLoginSuccess={loginSuccess} />} />
 
 
-                            {/* 404 page */}
-                            <Route path="*" element={<NotFoundPage />} />
+                                {/* 404 page */}
+                                <Route path="*" element={<NotFoundPage />} />
 
-                        </Routes>
+                            </Routes>
 
-                        <Footer />
-                    </Content>
-                </BrowserRouter>
-            )}
-        </Root>
+                            <Footer />
+                        </Content>
+                    </BrowserRouter>
+                )}
+            </Root>
+        </LoginProvider>
     );
 }
 

@@ -34,7 +34,7 @@ const LogDetailContent = styled.p`
     padding: 20px 20px;
 `;
 
-export default function LogDetail({ setIsLogIn }) {
+export default function LogDetail() {
     const { id } = useParams();
     console.log(id);
     const [log, setLog] = useState();
@@ -60,7 +60,7 @@ export default function LogDetail({ setIsLogIn }) {
             setLog(response.data.result);
             
             if (response.data.code === 'T002') {
-                await accessTokenReissueApi(setIsLogIn);
+                await accessTokenReissueApi();
                 fetchLog();
             } else if (response.data.code === 'T005') {
                 localStorage.removeItem('accessToken');
@@ -69,7 +69,7 @@ export default function LogDetail({ setIsLogIn }) {
         } catch (error) {
             console.log(error.response);
         }
-    }, [setIsLogIn, id]);
+    }, [id]);
 
     useEffect(() => {
         fetchLog();

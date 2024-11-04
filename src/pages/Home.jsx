@@ -23,7 +23,7 @@ const SearchBarWrapper = styled.div`
     align-items: center;
 `;
 
-export default function Home({ setIsLogIn }) {
+export default function Home() {
     const [logs, setLogs] = useState([]);
 
     const fetchLogs = useCallback(async () => {
@@ -47,7 +47,7 @@ export default function Home({ setIsLogIn }) {
             setLogs(Array.isArray(response.data.result) ? response.data.result : []);
 
             if (response.data.code === 'T002') {
-                await accessTokenReissueApi(setIsLogIn);
+                await accessTokenReissueApi();
                 fetchLogs();
             } else if (response.data.code === 'T005') {
                 localStorage.removeItem('accessToken');
@@ -56,7 +56,7 @@ export default function Home({ setIsLogIn }) {
         } catch (error) {
             console.log(error.response);
         }
-    }, [setIsLogIn]); // setIsLogIn이 변경될 때만 새로 생성
+    }, []); // setIsLogIn이 변경될 때만 새로 생성
 
     useEffect(() => {
         fetchLogs();
