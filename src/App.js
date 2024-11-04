@@ -36,8 +36,8 @@ function App() {
     }
 
     useEffect(() => {
-        localStorage.setItem('URL', 'http://43.203.89.62:8080');
-        updateToken().finally(() => actions.logout());
+        localStorage.setItem('URL', 'http://localhost:8080');
+        updateToken().finally(() => setIsLoading(false));
     }, []);
 
     // 30 분마다 자동으로 accessToken 재발급
