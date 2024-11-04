@@ -3,7 +3,7 @@ import axios from "axios";
 const accessTokenReissueApi = async (setIsLoggedIn) => {
     const refreshToken = localStorage.getItem('refreshToken');
     try {
-        const response = await axios.post('http://43.203.89.62:8080/api/v1/token/reissue', 
+        const response = await axios.post('http://localhost:8080/api/v1/token/reissue', 
             {},
             {
                 headers: {

@@ -35,7 +35,7 @@ function App() {
     }
 
     useEffect(() => {
-        localStorage.setItem('URL', 'http://43.203.89.62:8080');
+        localStorage.setItem('URL', 'http://localhost:8080');
         updateToken(setIsLogIn).finally(() => setIsLoading(false));
     }, []);
 

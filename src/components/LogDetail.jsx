@@ -48,7 +48,7 @@ export default function LogDetail({ setIsLogIn }) {
         }
 
         try {
-            const response = await axios.get(`http://43.203.89.62:8080/api/v1/log/${id}`, {
+            const response = await axios.get(`http://localhost:8080/api/v1/log/${id}`, {
                 headers: {
                     'accept': '*/*',
                     'Authorization': `Bearer ${accessToken}`,
