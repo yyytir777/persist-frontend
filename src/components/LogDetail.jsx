@@ -36,7 +36,6 @@ const LogDetailContent = styled.p`
 
 export default function LogDetail() {
     const { id } = useParams();
-    console.log(id);
     const [log, setLog] = useState();
 
     const fetchLog = useCallback(async() => {
@@ -55,7 +54,6 @@ export default function LogDetail() {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log(response.data);
             console.log('response of /api/v1/log/{log_id} : ', response.data.result);
             setLog(response.data.result);
             
@@ -73,9 +71,7 @@ export default function LogDetail() {
 
     useEffect(() => {
         fetchLog();
-
-        console.log(log);
-    }, [fetchLog, log]);
+    }, [fetchLog]);
 
     return(
         <LogDetailWrapper>

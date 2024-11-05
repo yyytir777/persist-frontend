@@ -13,7 +13,7 @@ import updateToken from './components/api/UpdateToken';
 import SplashScreen from './pages/SplashScreen';
 import LogDetail from './components/LogDetail';
 import { LoginProvider, useLoginState } from './components/context/LoginContext';
-import useUpdateToken from './components/api/UpdateToken';
+import checkLogin from './components/api/CheckLogin';
 
 const Root = styled.div`
     overflow-y: scroll;
@@ -31,22 +31,26 @@ function AppConent() {
     const {isLogin, setLogin, setLogout} = useLoginState();
     const [isLoading, setIsLoading] = useState(true);
 
-    const loginSuccess = () => {
-        setLogin();
-    }
+    localStorage.setItem('URL', 'http://localhost:8080');
 
+    // 로그인 시 렌더링할 때 accessToken 업데이트
     useEffect(() => {
-        localStorage.setItem('URL', 'http://localhost:8080');
+        const accessToken = localStorage.getItem('accessToken');
 
-        try {
-            const response = updateToken();
-            
-            if(!response) setLogout();
-            else setLogin();
-        } finally {
+        if(!accessToken) {
+            setLogout();
+            setIsLoading(false);
+            return;
+        }
+        // 로그인 실패 시 (로그아웃)
+        if(!checkLogin()) {
+            setLogout();
+            setIsLoading(false);
+        } else {
+            setLogin();
             setIsLoading(false);
         }
-    }, []);
+    }, [isLogin, setLogin, setLogout]);
 
     // 30 분마다 자동으로 accessToken 재발급
     useEffect(() => {
@@ -69,8 +73,8 @@ function AppConent() {
                             {/* <Route path='/settings' element={<Settings />} /> */}
 
                             {/* Redirect Login Handler Page */}
-                            <Route path='/oauth/callback/google' element={<GoogleLoginHandler onLoginSuccess={loginSuccess} />} />
-                            <Route path='/oauth/callback/kakao' element={<KakaoLoginHandler onLoginSuccess={loginSuccess} />} />
+                            <Route path='/oauth/callback/google' element={<GoogleLoginHandler />} />
+                            <Route path='/oauth/callback/kakao' element={<KakaoLoginHandler />} />
 
                             {/* 404 page */}
                             <Route path="*" element={<NotFoundPage />} />

@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useLoginState } from "../../components/context/LoginContext";
 
-export default function GoogleLoginHandler({ onLoginSuccess }) {
+export default function GoogleLoginHandler() {
 
     const navigate = useNavigate();
+    const { setLogin } = useLoginState();
     const code = new URL(window.location.href).searchParams.get('code');
 
     useEffect(() => {
@@ -26,13 +28,13 @@ export default function GoogleLoginHandler({ onLoginSuccess }) {
                     console.log('refreshToken', refreshToken);
                     localStorage.setItem('accessToken', accessToken);
                     localStorage.setItem('refreshToken', refreshToken);
-                    onLoginSuccess(); // loggedIn = true
+                    setLogin();
                     navigate("/");    
                 }
             });
         };
         getToken();
-    }, [code, navigate, onLoginSuccess]);
+    }, [code, navigate, setLogin]);
 
     return(
         <>

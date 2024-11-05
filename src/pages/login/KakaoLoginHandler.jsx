@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLoginState } from "../../components/context/LoginContext";
 
-export default function KakaoLoginHandler({ onLoginSuccess }) {
+export default function KakaoLoginHandler() {
 
     const navigate = useNavigate();
+    const { setLogin } = useLoginState();
     const code = new URL(window.location.href).searchParams.get('code');
 
     useEffect(() => {
@@ -23,12 +25,12 @@ export default function KakaoLoginHandler({ onLoginSuccess }) {
                 console.log('refreshToken', refreshToken);
                 localStorage.setItem('accessToken', accessToken);
                 localStorage.setItem('refreshToken', refreshToken);
-                onLoginSuccess();
+                setLogin();
                 navigate('/');
             });
         };
         getToken();
-    }, [code, navigate, onLoginSuccess]);
+    }, [code, navigate, setLogin]);
 
     return(
         <>

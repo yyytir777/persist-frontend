@@ -4,7 +4,7 @@ const LoginContext = createContext();
 
 // LoginProvider 컴포넌트 정의
 export function LoginProvider({ children }) {
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState();
 
     const setLogin = () => {
         setIsLogin(true);

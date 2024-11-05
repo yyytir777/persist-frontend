@@ -28,16 +28,13 @@ const updateToken = async () => {
             console.log('accessToken Expired');
             await accessTokenReissueApi();
         } else if (response.data.code === 'T005') {
-            alert(response.data.errorMessage);
+            alert(response.data);
             localStorage.removeItem('accessToken');
             window.location.href = '/login';
         }
     } catch (error) {
-        console.log(error.response);
-        return undefined;
+        console.log(error.message);
     }
-    
-    return undefined;
 }
 
 export default updateToken;

@@ -51,7 +51,7 @@ const HeaderButton = styled.button`
 
 export default function Header() {
     
-    const {isLogin, setLogin, setLogout} = useLoginState();
+    const {isLogin, setLogout} = useLoginState();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
 
