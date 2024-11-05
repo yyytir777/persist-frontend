@@ -75,7 +75,7 @@ export default function LogDetail() {
         fetchLog();
 
         console.log(log);
-    }, [fetchLog]);
+    }, [fetchLog, log]);
 
     return(
         <LogDetailWrapper>

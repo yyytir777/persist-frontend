@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const LoginContext = createContext();
 
@@ -6,21 +6,16 @@ const LoginContext = createContext();
 export function LoginProvider({ children }) {
     const [isLogin, setIsLogin] = useState(false);
 
-    const actions = useMemo(
-        () => ({
-            login() {
-                setIsLogin(true);
-            },
-            logout() {
-                setIsLogin(false);
-            }
-        }), []
-    );
+    const setLogin = () => {
+        setIsLogin(true);
+    }
 
-    const value = useMemo(() => [isLogin, actions], [isLogin, actions]);
+    const setLogout = () => {
+        setIsLogin(false);
+    }
 
     return (
-        <LoginContext.Provider value={value}>
+        <LoginContext.Provider value={{isLogin, setLogin, setLogout}}>
             {children}
         </LoginContext.Provider>
     );
@@ -28,7 +23,6 @@ export function LoginProvider({ children }) {
 
 // 커스텀 훅 정의
 export function useLoginState() {
-    const value = useContext(LoginContext);
-    if (value === undefined) throw new Error('useLoginState must be used within a LoginProvider');
-    return value;
+    
+    return useContext(LoginContext);
 }

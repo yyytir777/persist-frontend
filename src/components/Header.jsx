@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import menuIcon from '../img/icon_menu.svg';
 import userIcon from '../img/icon_user.png';
-import logoIcon from '../img/logo.png';
 import { useNavigate } from "react-router-dom";
 import MenuBar from "./MenuBar";
 import axios from "axios";
@@ -52,7 +51,7 @@ const HeaderButton = styled.button`
 
 export default function Header() {
     
-    const [isLogin, actions] = useLoginState();
+    const {isLogin, setLogin, setLogout} = useLoginState();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -68,7 +67,7 @@ export default function Header() {
     const handleLogout = () => {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        actions.logout();
+        setLogout();
         window.location.href = '/';
     }
 
