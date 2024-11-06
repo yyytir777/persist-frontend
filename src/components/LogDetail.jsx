@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import accessTokenReissueApi from "./api/AccessTokenReissueApi";
-import ReactMarkdown from 'react-markdown';
 
 const LogDetailWrapper = styled.div`
     width: 100%;
@@ -82,7 +81,6 @@ export default function LogDetail() {
                     </LogDetailThumbnailWrapper>
                     <LogDetailTitle>{log.title}</LogDetailTitle>
                     <LogDetailContent>
-                        <ReactMarkdown>{log.content}</ReactMarkdown>
                     </LogDetailContent>
                 </>
             ) : (<p>Loading...</p>)
