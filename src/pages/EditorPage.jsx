@@ -7,15 +7,14 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 
 import styled from "styled-components";
 import React, { useEffect, useRef, useState } from "react";
-import '../css/editor.css';
 
 const EditorWrapper = styled.div`
     min-height: 100%;
     padding: 2%;
     border: none;
+    overflow: visible;
 
     .toastui-editor-defaultUI {
-        display: flex;
         border: none;
     }
 
@@ -33,6 +32,7 @@ const EditorWrapper = styled.div`
 
     // main (상위)
     .toastui-editor-main {
+        min-height: 512px;
         order: 3 !important;
     }
 
@@ -43,11 +43,14 @@ const EditorWrapper = styled.div`
 
     // edit main
     .ProseMirror {
-        padding: 0px;
+        padding: 0px 20px;
+        height: 100%;
     }
 
     // preview main
-    
+    .toastui-editor-md-preview {
+        padding: 0px 20px;
+    }
 
 
     // switch mode
@@ -60,11 +63,11 @@ const EditorWrapper = styled.div`
         height: auto;
     }
 
-    .tab-item {
+    .tab-item .active {
         margin: 0px;
         padding: 4px;
         width: auto;
-        border: 1px solid black;
+        border: 1px solid whitesmoke;
         font-size: 20px;
         border-radius: none;
         height: 36px;
@@ -75,7 +78,21 @@ const EditorWrapper = styled.div`
     }
 
     .toastui-editor-mode-switch .tab-item.active {
-        border: 1px solid black;
+        border: 1px solid whitesmoke;
+    }
+
+    @media (max-width: 1000px) {
+        .toastui-editor-md-preview {
+            display: none;
+        }
+
+        .toastui-editor-md-splitter {
+            display: none !important;
+        }
+
+        .toastui-editor-main .toastui-editor-md-vertical-style .toastui-editor {
+            width: 100%;
+        }
     }
 `;
 
@@ -92,12 +109,16 @@ const InputTitle = styled.input`
     }
 `;
 
+const ButtonWrapper = styled.div`
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+`;
 
 /*
 Editor : markdown, WYSIWYG편집기
 write과 preview를 동시에
 사진을 복사 or 드래그하면 S3에 업로드하고 해당 url을 반환
-
 */
 export default function EditorPage() {
     const editorRef = useRef();
@@ -113,13 +134,12 @@ export default function EditorPage() {
         console.log("content : ", markdownContent);
     }
 
-    const handleKeyDown = (event) => {
-        if (event.key === 'Escape') {
-            // editorRef.current.getInstance().blur();
-            console.log('success');
+    const handleEscKey = (event) => {
+        console.log(event.key);
+        if(event.key === 'Escape') {
+            editorRef.current.getInstance().blur();
         }
-    };
-
+    }
 
     useEffect(() => {
         const editorInstance = editorRef.current.getInstance();
@@ -140,21 +160,23 @@ export default function EditorPage() {
                 placeholder= '여기에 입력하세요'
                 ref={editorRef}
                 usageStatistics={false}
+                useCommandShortcut={false}
                 onChange={() => console.log('Content changed')}
-
                 toolbarItems={[
                     ['heading', 'bold', 'italic', 'strike',
                     'hr', 'quote',
                     'ul', 'ol', 'task',
-                    'table', 'image', 'link',
+                    'table',
                     'code', 'codeblock']
                 ]}
-                
-                onKeydown={handleKeyDown}
-                
+                onKeydown={handleEscKey}
                 plugins={[colorSyntax]}
+                height={"100%"}
             />
-            <button onClick={handleSaveContent}>Save As Markdown</button>
+            <ButtonWrapper>
+                <button onClick={handleSaveContent}>Export As Markdown</button>
+                <button onClick={handleSaveContent}>Export As Html</button>
+            </ButtonWrapper>
         </EditorWrapper>
     );
-} 
+}

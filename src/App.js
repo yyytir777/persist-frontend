@@ -15,6 +15,7 @@ import LogDetail from './components/LogDetail';
 import { LoginProvider, useLoginState } from './components/context/LoginContext';
 import checkLogin from './components/api/CheckLogin';
 import EditorPage from './pages/EditorPage';
+import ReactEditor from './pages/ReactEditor';
 
 const Root = styled.div`
     overflow-y: scroll;
@@ -78,6 +79,8 @@ function AppConent() {
                             <Route path='/oauth/callback/kakao' element={<KakaoLoginHandler />} />
 
                             <Route path='/markdown' element={<EditorPage />} />
+                            <Route path='/react-md-editor' element={<ReactEditor />} />
+
                             {/* 404 page */}
                             <Route path="*" element={<NotFoundPage />} />
 
