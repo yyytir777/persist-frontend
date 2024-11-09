@@ -12,18 +12,21 @@ const EditorWrapper = styled.div`
     }
 
     .w-md-editor {
-        --md-editor-background-color: white;
-        --md-editor-text-color: black;
         box-shadow: none;
     }
 
     .w-md-editor-content {
-        color: black;
+        min-height: 100%;
+        height: auto;
+        overflow: hidden;
     }
 
     .w-md-editor-toolbar {
-        background-color: var(--md-editor-background-color);
 
+    }
+
+    .w-md-editor-bar {
+        display: none;
     }
 
     .w-md-editor-toolbar li > button {
@@ -39,9 +42,15 @@ const EditorWrapper = styled.div`
 
     .wmde-markdown {
         color: black;
-        background-color: var(--md-editor-background-color);
     }
 
+    .wmde-markdown pre {
+        background-color: whitesmoke;
+    }
+
+    .wmde-markdown hr {
+        height: 0px;
+    }
     .w-md-editor-text {
         height: 100%;
     }
@@ -82,7 +91,7 @@ export default function ReactEditor() {
     }
 
     return(
-        <EditorWrapper>
+        <EditorWrapper data-color-mode="light">
             <InputTitle 
                 type="text"
                 placeholder="제목을 입력하세요"
@@ -96,7 +105,10 @@ export default function ReactEditor() {
                 onChange={setValue}
                 height={'600px'}
                 onBlur={() => console.log('aasdf')}
-                theme="light"
+                visibleDragbar={false}
+                previewOptions={{
+                    allowedElements: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a', 'span', 'br', 'img', 'ul', 'li', 'ol', 'code', 'pre', 'hr'],
+                }}
             />
             <button onClick={getContent}>click!</button>
         </EditorWrapper>

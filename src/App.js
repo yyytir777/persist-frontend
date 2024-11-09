@@ -16,9 +16,9 @@ import { LoginProvider, useLoginState } from './components/context/LoginContext'
 import checkLogin from './components/api/CheckLogin';
 import EditorPage from './pages/EditorPage';
 import ReactEditor from './pages/ReactEditor';
+import Demo from './pages/demo';
 
 const Root = styled.div`
-    overflow-y: scroll;
     width: 100%;
     height: 100vh;
     display: flex;
@@ -80,6 +80,7 @@ function AppConent() {
 
                             <Route path='/markdown' element={<EditorPage />} />
                             <Route path='/react-md-editor' element={<ReactEditor />} />
+                            <Route path='/demo' element={<Demo />} />
 
                             {/* 404 page */}
                             <Route path="*" element={<NotFoundPage />} />

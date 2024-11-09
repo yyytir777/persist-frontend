@@ -81,6 +81,7 @@ export default function LogDetail() {
                     </LogDetailThumbnailWrapper>
                     <LogDetailTitle>{log.title}</LogDetailTitle>
                     <LogDetailContent>
+                        {log.content}
                     </LogDetailContent>
                 </>
             ) : (<p>Loading...</p>)
