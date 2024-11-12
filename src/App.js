@@ -14,8 +14,6 @@ import SplashScreen from './pages/SplashScreen';
 import LogDetail from './components/LogDetail';
 import { LoginProvider, useLoginState } from './components/context/LoginContext';
 import checkLogin from './components/api/CheckLogin';
-import EditorPage from './pages/EditorPage';
-import ReactEditor from './pages/ReactEditor';
 import Demo from './pages/demo';
 
 const Root = styled.div`
@@ -78,8 +76,6 @@ function AppConent() {
                             <Route path='/oauth/callback/google' element={<GoogleLoginHandler />} />
                             <Route path='/oauth/callback/kakao' element={<KakaoLoginHandler />} />
 
-                            <Route path='/markdown' element={<EditorPage />} />
-                            <Route path='/react-md-editor' element={<ReactEditor />} />
                             <Route path='/demo' element={<Demo />} />
 
                             {/* 404 page */}

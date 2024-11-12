@@ -50,8 +50,9 @@ export default function LogDetail() {
                 headers: {
                     'accept': '*/*',
                     'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/json',
+                },
+                withCredentials: true
             });
             console.log('response of /api/v1/log/{log_id} : ', response.data.result);
             setLog(response.data.result);
@@ -80,6 +81,7 @@ export default function LogDetail() {
                         <LogDetailThumbnail src={log.thumbnail} alt="thumbnail"/>
                     </LogDetailThumbnailWrapper>
                     <LogDetailTitle>{log.title}</LogDetailTitle>
+                    <p>{log.viewCount}</p>
                     <LogDetailContent>
                         {log.content}
                     </LogDetailContent>
