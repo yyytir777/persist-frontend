@@ -3,15 +3,23 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import accessTokenReissueApi from "./api/AccessTokenReissueApi";
+import MDEditor from "@uiw/react-md-editor";
+import Author from "./Author";
 
 const LogDetailWrapper = styled.div`
     width: 100%;
     min-height: 100%;
     padding: 0px 10%;
-    padding-bottom: 100px;
+    padding-bottom: 200px;
     justify-content: flex-start;
     flex-direction: column;
     align-items: center;
+
+    .wmde-markdown p img {
+        display: block;
+        margin: 0 auto;
+    }
+
 `;
 
 const LogDetailThumbnailWrapper = styled.div`
@@ -26,14 +34,21 @@ const LogDetailThumbnail = styled.img`
 `;
 
 const LogDetailTitle = styled.h1`
-    padding: 20px 10%;
+    padding: 20px 0px;
 `;
 
-const LogDetailContent = styled.p`
-    padding: 20px 20px;
+const LogInfoWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 40px;
 `;
 
-export default function LogDetail() {
+const LogInfoLeftWrapper = styled.div``;
+
+const LogInfoRightWrapper = styled.div``;
+
+const LogDetail = () => {
     const { id } = useParams();
     const [log, setLog] = useState();
 
@@ -74,17 +89,20 @@ export default function LogDetail() {
     }, [fetchLog]);
 
     return(
-        <LogDetailWrapper>
+        <LogDetailWrapper data-color-mode="light">
             {log ? (
                 <>
                     <LogDetailThumbnailWrapper>
                         <LogDetailThumbnail src={log.thumbnail} alt="thumbnail"/>
                     </LogDetailThumbnailWrapper>
                     <LogDetailTitle>{log.title}</LogDetailTitle>
-                    <p>{log.viewCount}</p>
-                    <LogDetailContent>
-                        {log.content}
-                    </LogDetailContent>
+                    <LogInfoWrapper>
+                        <LogInfoLeftWrapper>
+                            <Author authorThumbnail={log.authorThumbnail} authorName={log.author}/>
+                        </LogInfoLeftWrapper>
+                        <LogInfoRightWrapper>{log.viewCount}</LogInfoRightWrapper>
+                    </LogInfoWrapper>
+                    <MDEditor.Markdown source={log.content} theme="light" />
                 </>
             ) : (<p>Loading...</p>)
 
@@ -92,3 +110,5 @@ export default function LogDetail() {
         </LogDetailWrapper>
     );
 }
+
+export default LogDetail;

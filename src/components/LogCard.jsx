@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import Author from "./Author";
 
 const LogCardWrapper = styled.div`
     width: 100%;
@@ -26,21 +27,6 @@ const Upper = styled.div`
     align-items: center;
     border-bottom: 1px solid rgb(215, 215, 215);
 `;
-
-const Author = styled.div`
-    width: auto;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    gap: 5px;
-`;
-
-const AuthorImage = styled.img`
-    width: 20px;
-    height: 20px;
-`;
-
-const AuthorName = styled.div``;
 
 const LogDate = styled.div``;
 
@@ -72,7 +58,7 @@ const Preview = styled.div`
     text-overflow: ellipsis;
 `;
 
-export default function LogCard(props) {
+const LogCard = ({ log }) => {
     const navigate = useNavigate();
 
     const handleLog = (id) => {
@@ -80,19 +66,18 @@ export default function LogCard(props) {
     }
 
     return(
-        <LogCardWrapper onClick={() => handleLog(props.id)}>
+        <LogCardWrapper onClick={() => handleLog(log.id)}>
             <Upper>
-                <Author>
-                    <AuthorImage src={props.authorThumbnail} alt="authorThumbnail"/>
-                    <AuthorName>{props.name}</AuthorName>
-                </Author>
-                <LogDate>{props.createdDate}</LogDate>
+                <Author authorThumbnail={log.authorThumbnail} authorName={log.name}/>
+                <LogDate>{log.createdDate}</LogDate>
             </Upper>
 
 
-            <LogCardImage src={props.thumbnail} alt="logThumbnail" />
-            <Title>{props.title}</Title>
-            <Preview>{props.preview}</Preview>
+            <LogCardImage src={log.thumbnail} alt="logThumbnail" />
+            <Title>{log.title}</Title>
+            <Preview>{log.preview}</Preview>
         </LogCardWrapper>
     );
-} 
+}
+
+export default LogCard;
