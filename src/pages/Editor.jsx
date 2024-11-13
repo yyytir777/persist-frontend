@@ -136,6 +136,26 @@ export default function Editor() {
         }
     }
 
+    const uploadImage = async (file) => {
+        new AWS.S3();
+    }
+
+    const handleImageDrop = async (event) => {
+        event.preventDefault();
+        const files = event.dataTransfer.files;
+        if (files && files.length > 0) {
+            const file = files[0];
+
+            if(file.type.startsWith('image/')) {
+                const imageUrl = await uploadImage(file);
+
+                const cursorPosition = editorRef.current?.getSelectionStart();
+                const newValue = value.slice(0, cursorPosition) + `![${file.name}](${imageUrl})` + value.slice(cursorPosition);
+                setContent(newValue);
+            }
+        }
+    }
+
     useEffect(() => {
         // content height 조절 위한 속성 -> height을 '' 처리해야함
         // const editor = document.querySelector('.wmde-markdown-var.w-md-editor.w-md-editor-show-live');
@@ -186,7 +206,6 @@ export default function Editor() {
                 value={title}
                 onChange={handleTitleChange}
             />
-
             <MDEditor
                 ref={editorRef}
                 value={content}
@@ -199,6 +218,9 @@ export default function Editor() {
                 preview={mode}
                 onKeyDown={handleKeyDown}
                 extraCommands={[customCodeEdit, customCodeLive, customCodePreview, commands.fullscreen]}
+                
+                onDrop={handleImageDrop}
+                onDragOver={(e) => e.preventDefault()}
             />
             <button ref={hiddenButtonRef} style={{ opacity: 0, position: "absolute", pointerEvents: "none" }}></button>
             <ButtonWrapper>
