@@ -136,8 +136,29 @@ export default function Editor() {
         }
     }
 
+    AWS.config.update({
+        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+        region: process.env.REACT_APP_AWS_REGION,
+    })
+
     const uploadImage = async (file) => {
-        new AWS.S3();
+        const s3 = new AWS.S3();
+
+        const params = {
+            Bucket: process.env.REACT_APP_S3_BUCKET_NAME,
+            Key: `/${file.name}`,
+            Body: file,
+            ContentType: file.type,
+            ACL: 'public-read',
+        };
+
+        try {
+            const uploadResult = await s3.upload(params).promise();
+            return uploadResult.Location;
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const handleImageDrop = async (event) => {

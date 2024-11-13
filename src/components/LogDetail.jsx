@@ -4,21 +4,35 @@ import styled from "styled-components";
 import MDEditor from "@uiw/react-md-editor";
 import Author from "./Author";
 import apiClient from "./api/AxiosInterceptor";
+import defaultImage from "../img/default_image.png"
+
 
 const LogDetailWrapper = styled.div`
-    width: 100%;
+    margin: 0px auto;
+    width: 1000px;
     min-height: 100%;
-    padding: 0px 10%;
+    padding: auto;
     padding-bottom: 200px;
     justify-content: flex-start;
     flex-direction: column;
     align-items: center;
+
+    @media (max-width: 1000px) {
+        width: auto;
+    }
+
+    .wmde-markdown {
+        padding: 0px 16px;
+    }
 
     .wmde-markdown p img {
         display: block;
         margin: 0 auto;
     }
 
+    .wmde-markdown hr {
+        height: 0em;
+    }
 `;
 
 const LogDetailThumbnailWrapper = styled.div`
@@ -27,19 +41,21 @@ const LogDetailThumbnailWrapper = styled.div`
 `;
 
 const LogDetailThumbnail = styled.img`
-    width: 50%;
+    width: 32%;
     object-fit: cover;
     object-position: center;
 `;
 
 const LogDetailTitle = styled.h1`
-    padding: 20px 0px;
+    font-size: 48px;
+    padding: 20px 16px;
 `;
 
 const LogInfoWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 0px 16px;
     padding-bottom: 40px;
 `;
 
@@ -77,14 +93,14 @@ const LogDetail = () => {
             {log ? (
                 <>
                     <LogDetailThumbnailWrapper>
-                        <LogDetailThumbnail src={log.thumbnail} alt="thumbnail"/>
+                        <LogDetailThumbnail src={log.thumbnail ? log.thumbnail : defaultImage} alt="thumbnail"/>
                     </LogDetailThumbnailWrapper>
                     <LogDetailTitle>{log.title}</LogDetailTitle>
                     <LogInfoWrapper>
                         <LogInfoLeftWrapper>
                             <Author authorThumbnail={log.authorThumbnail} authorName={log.author}/>
                         </LogInfoLeftWrapper>
-                        <LogInfoRightWrapper>{log.viewCount}</LogInfoRightWrapper>
+                        <LogInfoRightWrapper>{log.viewCount} viewed</LogInfoRightWrapper>
                     </LogInfoWrapper>
                     <MDEditor.Markdown source={log.content} theme="light" />
                 </>
