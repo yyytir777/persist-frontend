@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Author from "./Author";
+import defaultImage from "../img/default_image.png"
 
 const LogCardWrapper = styled.div`
     width: 100%;
@@ -73,7 +74,7 @@ const LogCard = ({ log }) => {
             </Upper>
 
 
-            <LogCardImage src={log.thumbnail} alt="logThumbnail" />
+            <LogCardImage src={log.thumbnail ? log.thumbnail : defaultImage} alt="logThumbnail" />
             <Title>{log.title}</Title>
             <Preview>{log.preview}</Preview>
         </LogCardWrapper>

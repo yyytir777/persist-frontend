@@ -13,7 +13,8 @@ import SplashScreen from './pages/SplashScreen';
 import LogDetail from './components/LogDetail';
 import { LoginProvider, useLoginState } from './components/context/LoginContext';
 import checkLogin from './components/api/CheckLogin';
-import Demo from './pages/demo';
+import Editor from './pages/Editor';
+
 
 const Root = styled.div`
     width: 100%;
@@ -79,7 +80,7 @@ function AppConent() {
                             <Route path='/oauth/callback/google' element={<GoogleLoginHandler />} />
                             <Route path='/oauth/callback/kakao' element={<KakaoLoginHandler />} />
 
-                            <Route path='/demo' element={<Demo />} />
+                            <Route path='/editor' element={<Editor />} />
 
                             {/* 404 page */}
                             <Route path="*" element={<NotFoundPage />} />

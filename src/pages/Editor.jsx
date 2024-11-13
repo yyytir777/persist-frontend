@@ -54,7 +54,7 @@ const ButtonWrapper = styled.div`
 
 `;
 
-export default function Demo() {
+export default function Editor() {
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
     const [mode, setMode] = useState('live');
@@ -110,6 +110,15 @@ export default function Demo() {
         console.log("title : ", title);
         console.log("content : ", content);
         const thumbnail = "string";
+        
+        if (!title) {
+            alert("제목을 입력하세요");
+            return;
+        }
+        else if (!content) {
+            alert("내용을 입력하세요");
+            return;
+        }
 
         try {
             const logId = await logSave(title, thumbnail, content);
