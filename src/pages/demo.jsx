@@ -113,7 +113,8 @@ export default function Demo() {
 
         try {
             const logId = await logSave(title, thumbnail, content);
-            navigate(`/logs/${logId}`);
+            console.log('logId : ', logId);
+            if(logId) navigate(`/logs/${logId}`);
         } catch (error) {
             console.log(error);
         }

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
-import axios from 'axios';
 import SearchBar from '../components/SearchBar';
 import accessTokenReissueApi from "../components/api/AccessTokenReissueApi";
 import LogGrid from "../components/LogGrid";
+import apiClient from "../components/api/AxiosInterceptor";
 
 const HomeWrapper = styled.div`
     width: 100%;
@@ -35,13 +35,7 @@ export default function Home() {
         }
 
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/log/all', {
-                headers: {
-                    'accept': '*/*',
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
-                }
-            });
+            const response = await apiClient.get('http://localhost:8080/api/v1/log/all');
 
             console.log('response of /api/v1/log/all : ', response.data);
             setLogs(Array.isArray(response.data.result) ? response.data.result : []);

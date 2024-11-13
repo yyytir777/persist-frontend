@@ -9,7 +9,6 @@ import NotFoundPage from './pages/NotFoundPage';
 import Login from './pages/login/Login';
 import GoogleLoginHandler from './pages/login/GoogleLoginHandler';
 import KakaoLoginHandler from './pages/login/KakaoLoginHandler';
-import updateToken from './components/api/UpdateToken';
 import SplashScreen from './pages/SplashScreen';
 import LogDetail from './components/LogDetail';
 import { LoginProvider, useLoginState } from './components/context/LoginContext';
@@ -35,28 +34,32 @@ function AppConent() {
 
     // 로그인 시 렌더링할 때 accessToken 업데이트
     useEffect(() => {
-        const accessToken = localStorage.getItem('accessToken');
-
-        if(!accessToken) {
-            setLogout();
-            setIsLoading(false);
-            return;
+        const initLogin = async () => {
+            const accessToken = localStorage.getItem('accessToken');
+            if(!accessToken) {
+                setLogout();
+                setIsLoading(false);
+                return;
+            }
+            // 로그인 실패 시 (로그아웃)
+            
+            if(!checkLogin()) {
+                setLogout();
+                setIsLoading(false);
+            } else {
+                setLogin();
+                setIsLoading(false);
+            }
+    
         }
-        // 로그인 실패 시 (로그아웃)
-        if(!checkLogin()) {
-            setLogout();
-            setIsLoading(false);
-        } else {
-            setLogin();
-            setIsLoading(false);
-        }
+        initLogin();
     }, [isLogin, setLogin, setLogout]);
 
     // 30 분마다 자동으로 accessToken 재발급
-    useEffect(() => {
-        const intervalRequest = setInterval(() => updateToken(), 30 * 60 * 1000);
-        return () => clearInterval(intervalRequest);
-    }, []);
+    // useEffect(() => {
+    //     const intervalRequest = setInterval(() => checkLogin(), 30 * 60 * 1000);
+    //     return () => clearInterval(intervalRequest);
+    // }, []);
 
     return(
         <Root>

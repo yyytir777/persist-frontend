@@ -4,6 +4,7 @@ import LogGrid from "../components/LogGrid";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import accessTokenReissueApi from "../components/api/AccessTokenReissueApi";
+import apiClient from "../components/api/AxiosInterceptor";
 
 const HomeWrapper = styled.div`
     width: 100%;
@@ -61,13 +62,7 @@ export default function MemberPage( {setIsLogIn} ) {
         }
 
         try {
-            const response = await axios.get(`${URL}/api/v1/member/${memberId}`, {
-                headers: {
-                    'accept': '*/*',
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
-                }
-            });
+            const response = await apiClient.get(`${URL}/api/v1/member/${memberId}`);
 
             console.log('response of /api/v1/log/member/{member_id}', response.data);
             setLogs(Array.isArray(response.data.result) ? response.data.result : []);

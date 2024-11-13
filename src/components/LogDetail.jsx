@@ -1,10 +1,9 @@
-import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import accessTokenReissueApi from "./api/AccessTokenReissueApi";
 import MDEditor from "@uiw/react-md-editor";
 import Author from "./Author";
+import apiClient from "./api/AxiosInterceptor";
 
 const LogDetailWrapper = styled.div`
     width: 100%;
@@ -61,24 +60,9 @@ const LogDetail = () => {
         }
 
         try {
-            const response = await axios.get(`http://localhost:8080/api/v1/log/${id}`, {
-                headers: {
-                    'accept': '*/*',
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json',
-                },
-                withCredentials: true
-            });
+            const response = await apiClient.get(`http://localhost:8080/api/v1/log/${id}`);
             console.log('response of /api/v1/log/{log_id} : ', response.data.result);
             setLog(response.data.result);
-            
-            if (response.data.code === 'T002') {
-                await accessTokenReissueApi();
-                fetchLog();
-            } else if (response.data.code === 'T005') {
-                localStorage.removeItem('accessToken');
-                window.location.href = '/login';
-            }
         } catch (error) {
             console.log(error.response);
         }
