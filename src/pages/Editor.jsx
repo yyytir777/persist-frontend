@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logSave from "../components/api/log/LogSaveApi";
+import uploadImage from "../components/api/s3/UploadImage";
 
 const EditorWrapper = styled.div`
     min-height: 100%;
@@ -35,6 +36,32 @@ const EditorWrapper = styled.div`
         width: 24px;
     }
 
+    .wmde-markdown hr {
+        height: 0px;
+    }
+`;
+
+const InputThumbnailWrapper = styled.div`
+
+    display: flex;
+    justify-content: center;
+`;
+
+const InputThumbnailButton = styled.div`
+    height: 300px;
+    width: 500px;
+    background-color: whitesmoke;
+    background-image: ${({ $imageUrl }) => $imageUrl ? `url(${$imageUrl})` : "none"};
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        ${({ $imageUrl }) => $imageUrl && "display: none;"}
+    }
 `;
 
 const InputTitle = styled.input`
@@ -57,6 +84,7 @@ const ButtonWrapper = styled.div`
 export default function Editor() {
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
+    const [thumbnail, setThumbnail] = useState('');
     const [mode, setMode] = useState('live');
     const [isFullScreen, setIsFullScrenn] = useState(false);
     const editorRef = useRef();
@@ -102,15 +130,23 @@ export default function Editor() {
         }
     }
 
+    const customCommandTitle = {
+        ...commands.group([commands.title1, commands.title2, commands.title3, commands.title4, commands.title5, commands.title6], {
+            name: 'title',
+            groupName: 'title',
+            buttonProps: {'aria-label': 'Insert title'}
+        })
+    }
+
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
     }
 
     const handleLogSave = async () => {
         console.log("title : ", title);
+        console.log("thumbnail : ", thumbnail);
         console.log("content : ", content);
-        const thumbnail = "string";
-        
+
         if (!title) {
             alert("제목을 입력하세요");
             return;
@@ -136,47 +172,73 @@ export default function Editor() {
         }
     }
 
-    AWS.config.update({
-        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-        region: process.env.REACT_APP_AWS_REGION,
-    })
+    const handleThumbnailDrop = async (event) => {
+        event.preventDefault();
+        const files = event.dataTransfer.files;
 
-    const uploadImage = async (file) => {
-        const s3 = new AWS.S3();
+        if(files && files.length > 0) {
+            const file = files[0];
 
-        const params = {
-            Bucket: process.env.REACT_APP_S3_BUCKET_NAME,
-            Key: `/${file.name}`,
-            Body: file,
-            ContentType: file.type,
-            ACL: 'public-read',
-        };
-
-        try {
-            const uploadResult = await s3.upload(params).promise();
-            return uploadResult.Location;
-        } catch (error) {
-            console.log(error);
+            if(file.type.startsWith('image/')) {
+                const imageUrl = await uploadImage(file);
+                console.log('imageUrl : ', imageUrl);
+                setThumbnail(imageUrl);
+            }
         }
     }
 
     const handleImageDrop = async (event) => {
         event.preventDefault();
         const files = event.dataTransfer.files;
+    
         if (files && files.length > 0) {
             const file = files[0];
-
-            if(file.type.startsWith('image/')) {
+    
+            if (file.type.startsWith('image/')) {
                 const imageUrl = await uploadImage(file);
+    
+                const editorTextArea = editorRef.current?.textarea;
+                if (editorTextArea) {
+                    const cursorPosition = editorTextArea.selectionStart;
+                    const newContent = 
+                        content.slice(0, cursorPosition) + 
+                        `![${file.name}](${imageUrl})` + 
+                        content.slice(cursorPosition);
+    
+                    setContent(newContent);
+    
+                    // 이미지 삽입 후 커서 위치 조정
+                    setTimeout(() => {
+                        const newCursorPosition = cursorPosition + `![${file.name}](${imageUrl})`.length;
+                        editorTextArea.selectionStart = newCursorPosition;
+                        editorTextArea.selectionEnd = newCursorPosition;
+                        editorTextArea.focus();
+                    }, 0);
+                }
+            }
+        }
+    };
 
-                const cursorPosition = editorRef.current?.getSelectionStart();
-                const newValue = value.slice(0, cursorPosition) + `![${file.name}](${imageUrl})` + value.slice(cursorPosition);
-                setContent(newValue);
+    const handleImagePaste = async (event) => {
+        console.log('paste image');
+        const items = event.clipboardData.items;
+        for (const item of items) {
+            if(item.type.startsWith('image/')) {
+                event.preventDefault();
+                const file = item.getAsFile();
+
+                if(file) {
+                    try {
+                        const imageUrl = await uploadImage(file);
+                        setContent((content) => `${content}\n\n![pasted image](${imageUrl})`);
+                    } catch (error) {
+                        console.error('image upload failed', error);
+                    }
+                }
             }
         }
     }
-
+    
     useEffect(() => {
         // content height 조절 위한 속성 -> height을 '' 처리해야함
         // const editor = document.querySelector('.wmde-markdown-var.w-md-editor.w-md-editor-show-live');
@@ -221,6 +283,15 @@ export default function Editor() {
     
     return(
         <EditorWrapper data-color-mode="light">
+            <InputThumbnailWrapper>
+                <InputThumbnailButton
+                    onDrop={handleThumbnailDrop}
+                    onDragOver={(e) => e.preventDefault()}
+                    $imageUrl={thumbnail}>
+                    <p>여기에 썸네일을 놓아주세요</p>
+                </InputThumbnailButton>
+            </InputThumbnailWrapper>
+
             <InputTitle 
                 type="text"
                 placeholder="제목을 입력하세요"
@@ -233,19 +304,33 @@ export default function Editor() {
                 onChange={setContent}
                 height={'526px'}
                 previewOptions={{
-                    allowedElements: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a', 'span', 'br', 'img', 'ul', 'li', 'ol', 'code', 'pre', 'hr'],
+                    allowedElements: [
+                        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 
+                        'p', 'a', 'span', 'br', 'img', 
+                        'ul', 'li', 'ol', 'code', 'pre', 
+                        'hr', 'em', 'strong', 'del', 
+                        'blockquote', 'table', 'tr', 'td', 'th', 'thead', 'tbody'
+                    ]
                 }}
                 fullscreen={isFullScreen}
                 preview={mode}
                 onKeyDown={handleKeyDown}
+
+                commands={[commands.bold, commands.italic, commands.strikethrough, customCommandTitle, commands.divider,
+                    commands.quote, commands.code, commands.codeBlock, commands.comment, commands.table, commands.divider,
+                    commands.unorderedListCommand, commands.orderedListCommand, commands.checkedListCommand, 
+                    commands.help]}
+
                 extraCommands={[customCodeEdit, customCodeLive, customCodePreview, commands.fullscreen]}
                 
                 onDrop={handleImageDrop}
                 onDragOver={(e) => e.preventDefault()}
+
+                onPaste={handleImagePaste}
             />
             <button ref={hiddenButtonRef} style={{ opacity: 0, position: "absolute", pointerEvents: "none" }}></button>
             <ButtonWrapper>
-                <button onClick={handleLogSave}>Save</button>
+                <button onClick={handleLogSave}>게시하기</button>
             </ButtonWrapper>
         </EditorWrapper>
     );  
