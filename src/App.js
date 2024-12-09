@@ -35,60 +35,52 @@ function AppConent() {
 
     // 로그인 시 렌더링할 때 accessToken 업데이트
     useEffect(() => {
+
         const initLogin = async () => {
             const accessToken = localStorage.getItem('accessToken');
             if(!accessToken) {
-                setLogout(true);
+                setLogout();
                 setIsLoading(false);
                 return;
             }
-            // 로그인 실패 시 (로그아웃)
             
-            if(!checkLogin()) {
-                setLogout();
-                setIsLoading(false);
-            } else {
-                setLogin();
-                setIsLoading(false);
-            }
+            const isLoginValid = await checkLogin();
+            if(!isLoginValid) setLogout();
+            else setLogin();
+            setIsLoading(false);
         }
+
         initLogin();
     }, [setLogin, setLogout]);
 
-    // 30 분마다 자동으로 accessToken 재발급
-    // useEffect(() => {
-    //     const intervalRequest = setInterval(() => checkLogin(), 30 * 60 * 1000);
-    //     return () => clearInterval(intervalRequest);
-    // }, []);
-
     return(
-        <Root>
-            {isLoading ? (<SplashScreen />)
-            : (
-                <BrowserRouter>
-                    <Header />
-                    <Content>
-                        <Routes>
-                            <Route path='/' element={<Home />} />
-                            <Route path='/login' element={<Login />} />
+        <Root> {isLoading ? (<SplashScreen />) : (
+            <BrowserRouter>
+                <Header />
+                <Content>
+                    <Routes>
+                        <Route path='/' element={<Home />} />
+                        <Route path='/login' element={<Login />} />
 
-                            <Route path='/logs/:id' element={<LogDetail />} />
-                            {/* <Route path='/settings' element={<Settings />} /> */}
+                        <Route path='/logs/:id' element={<LogDetail />} />
+                        {/* <Route path='/settings' element={<Settings />} /> */}
 
-                            {/* Redirect Login Handler Page */}
-                            <Route path='/oauth/callback/google' element={<GoogleLoginHandler />} />
-                            <Route path='/oauth/callback/kakao' element={<KakaoLoginHandler />} />
+                        {/* Redirect Login Handler Page */}
+                        <Route path='/oauth/callback/google' element={<GoogleLoginHandler />} />
+                        <Route path='/oauth/callback/kakao' element={<KakaoLoginHandler />} />
 
-                            <Route path='/editor' element={<Editor />} />
+                        <Route path='/editor' element={<Editor />} />
 
-                            {/* 404 page */}
-                            <Route path="*" element={<NotFoundPage />} />
+                        {/* 404 page */}
+                        <Route path="*" element={<NotFoundPage />} />
 
-                        </Routes>
+                        {/* Network Error Page */}
 
-                        <Footer />
-                    </Content>
-                </BrowserRouter>
+                    </Routes>
+
+                    <Footer />
+                </Content>
+            </BrowserRouter>
             )}
         </Root>
     );

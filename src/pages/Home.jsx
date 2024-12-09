@@ -26,20 +26,12 @@ export default function Home() {
     const [logs, setLogs] = useState([]);
 
     const fetchLogs = useCallback(async () => {
-        const accessToken = localStorage.getItem('accessToken');
-
-        if (!accessToken) {
-            console.log('accessToken is not defined');
-            return;
-        }
-
         try {
-            const response = await apiClient.get('http://localhost:8080/api/v1/log/all');
-            console.log('response of /api/v1/log/all : ', response.data);
+            const response = await apiClient.get('/api/v1/log/all');
+            console.log(response.data);
             setLogs(Array.isArray(response.data.result) ? response.data.result : []);
-
         } catch (error) {
-            console.log(error.response);
+            console.log(error.data);
         }
     }, []); // setIsLogIn이 변경될 때만 새로 생성
 
