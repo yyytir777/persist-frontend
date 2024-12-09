@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { Editor } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
-import styled from "styled-components";
-
-const EditorWrapper = styled.div`
-    min-height: 100%;
-`;
-
-export default function EditorPage() {
-    return(
-        <EditorWrapper>
-            <Editor />
-=======
-=======
->>>>>>> 45f1013b8413169d76798f1485a59a7ddf379f9d
 import { Editor } from "@toast-ui/react-editor";
 import '@toast-ui/editor/toastui-editor.css'
 
@@ -194,10 +177,6 @@ export default function EditorPage() {
                 <button onClick={handleSaveContent}>Export As Markdown</button>
                 <button onClick={handleSaveContent}>Export As Html</button>
             </ButtonWrapper>
-<<<<<<< HEAD
->>>>>>> 45f1013b8413169d76798f1485a59a7ddf379f9d
-=======
->>>>>>> 45f1013b8413169d76798f1485a59a7ddf379f9d
         </EditorWrapper>
     );
 }

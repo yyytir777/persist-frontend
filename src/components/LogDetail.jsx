@@ -6,20 +6,16 @@ import Author from "./Author";
 import apiClient from "./api/AxiosInterceptor";
 
 const LogDetailWrapper = styled.div`
-    width: 100%;
+    margin: 0px auto;
+    width: 1000px;
     min-height: 100%;
     padding: 0px 10%;
-    padding-bottom: 200px;
-    justify-content: flex-start;
-    flex-direction: column;
-    align-items: center;
 
     .wmde-markdown p img {
         display: block;
         margin: 0 auto;
     }
-
-`;
+ `;
 
 const LogDetailThumbnailWrapper = styled.div`
     display: flex;
@@ -34,7 +30,6 @@ const LogDetailThumbnail = styled.img`
 `;
 
 const LogDetailTitle = styled.h1`
-<<<<<<< HEAD
     padding: 20px 20px;
 `;
 
@@ -80,6 +75,14 @@ const LogInfoWrapper = styled.div`
     padding-bottom: 40px;
 `;
 
+const LogInfoWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0px 16px;
+    padding-bottom: 40px;
+`;
+
 const LogInfoLeftWrapper = styled.div``;
 
 const LogInfoRightWrapper = styled.div``;
@@ -114,13 +117,17 @@ const LogDetail = () => {
             {log ? (
                 <>
                     <LogDetailThumbnailWrapper>
-                        <LogDetailThumbnail src={log.thumbnail} alt="thumbnail"/>
+                        <LogDetailThumbnail src={log.thumbnail ? log.thumbnail : defaultImage} alt="thumbnail"/>
                     </LogDetailThumbnailWrapper>
 
                     <LogDetailTitle>{log.title}</LogDetailTitle>
-                    <LogDetailContent>
-                        <ReactMarkdown>{log.content}</ReactMarkdown>
-                    </LogDetailContent>
+                    <LogInfoWrapper>
+                        <LogInfoLeftWrapper>
+                            <Author authorThumbnail={log.authorThumbnail} authorName={log.author}/>
+                        </LogInfoLeftWrapper>
+                        <LogInfoRightWrapper>{log.viewCount} viewed</LogInfoRightWrapper>
+                    </LogInfoWrapper>
+                    <MDEditor.Markdown source={log.content} theme="light" />
                 </>
             ) : (<p>Loading...</p>)
 

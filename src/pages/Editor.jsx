@@ -34,7 +34,6 @@ const EditorWrapper = styled.div`
         height: 24px;
         width: 24px;
     }
-
 `;
 
 const InputTitle = styled.input`
@@ -109,8 +108,8 @@ export default function Editor() {
     const handleLogSave = async () => {
         console.log("title : ", title);
         console.log("content : ", content);
+      
         const thumbnail = "string";
-        
         if (!title) {
             alert("제목을 입력하세요");
             return;
@@ -136,6 +135,73 @@ export default function Editor() {
         }
     }
 
+    const handleThumbnailDrop = async (event) => {
+        event.preventDefault();
+        const files = event.dataTransfer.files;
+
+        if(files && files.length > 0) {
+            const file = files[0];
+
+            if(file.type.startsWith('image/')) {
+                const imageUrl = await uploadImage(file);
+                console.log('imageUrl : ', imageUrl);
+                setThumbnail(imageUrl);
+            }
+        }
+    }
+
+    const handleImageDrop = async (event) => {
+        event.preventDefault();
+        const files = event.dataTransfer.files;
+    
+        if (files && files.length > 0) {
+            const file = files[0];
+    
+            if (file.type.startsWith('image/')) {
+                const imageUrl = await uploadImage(file);
+    
+                const editorTextArea = editorRef.current?.textarea;
+                if (editorTextArea) {
+                    const cursorPosition = editorTextArea.selectionStart;
+                    const newContent = 
+                        content.slice(0, cursorPosition) + 
+                        `![${file.name}](${imageUrl})` + 
+                        content.slice(cursorPosition);
+    
+                    setContent(newContent);
+    
+                    // 이미지 삽입 후 커서 위치 조정
+                    setTimeout(() => {
+                        const newCursorPosition = cursorPosition + `![${file.name}](${imageUrl})`.length;
+                        editorTextArea.selectionStart = newCursorPosition;
+                        editorTextArea.selectionEnd = newCursorPosition;
+                        editorTextArea.focus();
+                    }, 0);
+                }
+            }
+        }
+    };
+
+    const handleImagePaste = async (event) => {
+        console.log('paste image');
+        const items = event.clipboardData.items;
+        for (const item of items) {
+            if(item.type.startsWith('image/')) {
+                event.preventDefault();
+                const file = item.getAsFile();
+
+                if(file) {
+                    try {
+                        const imageUrl = await uploadImage(file);
+                        setContent((content) => `${content}\n\n![pasted image](${imageUrl})`);
+                    } catch (error) {
+                        console.error('image upload failed', error);
+                    }
+                }
+            }
+        }
+    }
+    
     useEffect(() => {
         // content height 조절 위한 속성 -> height을 '' 처리해야함
         // const editor = document.querySelector('.wmde-markdown-var.w-md-editor.w-md-editor-show-live');
@@ -180,13 +246,22 @@ export default function Editor() {
     
     return(
         <EditorWrapper data-color-mode="light">
+            <InputThumbnailWrapper>
+                <InputThumbnailButton
+                    onDrop={handleThumbnailDrop}
+                    onDragOver={(e) => e.preventDefault()}
+                    $imageUrl={thumbnail}>
+                    <p>여기에 썸네일을 놓아주세요</p>
+                </InputThumbnailButton>
+            </InputThumbnailWrapper>
+
             <InputTitle 
                 type="text"
                 placeholder="제목을 입력하세요"
                 value={title}
                 onChange={handleTitleChange}
             />
-
+                  
             <MDEditor
                 ref={editorRef}
                 value={content}
@@ -198,11 +273,22 @@ export default function Editor() {
                 fullscreen={isFullScreen}
                 preview={mode}
                 onKeyDown={handleKeyDown}
+
+                commands={[commands.bold, commands.italic, commands.strikethrough, customCommandTitle, commands.divider,
+                    commands.quote, commands.code, commands.codeBlock, commands.comment, commands.table, commands.divider,
+                    commands.unorderedListCommand, commands.orderedListCommand, commands.checkedListCommand, 
+                    commands.help]}
+
                 extraCommands={[customCodeEdit, customCodeLive, customCodePreview, commands.fullscreen]}
+                
+                onDrop={handleImageDrop}
+                onDragOver={(e) => e.preventDefault()}
+
+                onPaste={handleImagePaste}
             />
             <button ref={hiddenButtonRef} style={{ opacity: 0, position: "absolute", pointerEvents: "none" }}></button>
             <ButtonWrapper>
-                <button onClick={handleLogSave}>Save</button>
+                <button onClick={handleLogSave}>게시하기</button>
             </ButtonWrapper>
         </EditorWrapper>
     );  

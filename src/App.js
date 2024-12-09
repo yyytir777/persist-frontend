@@ -9,7 +9,6 @@ import NotFoundPage from './pages/NotFoundPage';
 import Login from './pages/login/Login';
 import GoogleLoginHandler from './pages/login/GoogleLoginHandler';
 import KakaoLoginHandler from './pages/login/KakaoLoginHandler';
-import updateToken from './components/api/UpdateToken';
 import SplashScreen from './pages/SplashScreen';
 import LogDetail from './components/LogDetail';
 import { LoginProvider, useLoginState } from './components/context/LoginContext';
@@ -79,7 +78,6 @@ function AppConent() {
                             {/* Redirect Login Handler Page */}
                             <Route path='/oauth/callback/google' element={<GoogleLoginHandler />} />
                             <Route path='/oauth/callback/kakao' element={<KakaoLoginHandler />} />
-
                             <Route path='/editor' element={<EditorPage />} />
 
                             {/* 404 page */}
