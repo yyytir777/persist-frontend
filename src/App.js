@@ -28,7 +28,7 @@ const Content = styled.div`
 `;
 
 function AppConent() {
-    const {isLogin, setLogin, setLogout} = useLoginState();
+    const {setLogin, setLogout} = useLoginState();
     const [isLoading, setIsLoading] = useState(true);
 
     localStorage.setItem('URL', 'http://localhost:8080');
@@ -38,7 +38,7 @@ function AppConent() {
         const initLogin = async () => {
             const accessToken = localStorage.getItem('accessToken');
             if(!accessToken) {
-                setLogout();
+                setLogout(true);
                 setIsLoading(false);
                 return;
             }
@@ -51,10 +51,9 @@ function AppConent() {
                 setLogin();
                 setIsLoading(false);
             }
-    
         }
         initLogin();
-    }, [isLogin, setLogin, setLogout]);
+    }, [setLogin, setLogout]);
 
     // 30 분마다 자동으로 accessToken 재발급
     // useEffect(() => {

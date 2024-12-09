@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import SearchBar from '../components/SearchBar';
-import accessTokenReissueApi from "../components/api/AccessTokenReissueApi";
 import LogGrid from "../components/LogGrid";
 import apiClient from "../components/api/AxiosInterceptor";
 
@@ -36,17 +35,9 @@ export default function Home() {
 
         try {
             const response = await apiClient.get('http://localhost:8080/api/v1/log/all');
-
             console.log('response of /api/v1/log/all : ', response.data);
             setLogs(Array.isArray(response.data.result) ? response.data.result : []);
 
-            if (response.data.code === 'T002') {
-                await accessTokenReissueApi();
-                fetchLogs();
-            } else if (response.data.code === 'T005') {
-                localStorage.removeItem('accessToken');
-                window.location.href = '/login';
-            }
         } catch (error) {
             console.log(error.response);
         }
