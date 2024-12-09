@@ -4,10 +4,10 @@ import menuIcon from '../img/icon_menu.svg';
 import userIcon from '../img/icon_user.png';
 import { useNavigate } from "react-router-dom";
 import MenuBar from "./MenuBar";
-import axios from "axios";
 import accessTokenReissueApi from "./api/AccessTokenReissueApi";
 import handleHome from "./handler/handleHome";
 import { useLoginState } from "./context/LoginContext";
+import apiClient from "./api/AxiosInterceptor";
 
 const HeaderContainer = styled.div`
     height: 60px;
@@ -81,13 +81,7 @@ export default function Header() {
         }
 
         try {
-            const response = await axios.get(`${URL}/api/v1/token/memberId`, {
-                headers: {
-                    Accept: '*/*',
-                    Authorization: `Bearer ${accessToken}`,
-                    'Content-type': 'application/json'
-                    }
-            });
+            const response = await apiClient.get(`${URL}/api/v1/token/memberId`);
             return response;
         } catch(error) {
             console.log(error.reponse);

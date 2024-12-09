@@ -18,7 +18,7 @@ const LogGrid = ({ logs }) => {
 
     return(
         <Grid>
-            {logs?.map((log) => <LogCard key={log.id} {...log} />)}
+            {logs?.map((log) => <LogCard key={log.id} log={log} />)}
         </Grid>
     );
 }

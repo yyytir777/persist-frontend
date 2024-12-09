@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import Author from "./Author";
+import defaultImage from "../img/default_image.png"
 
 const LogCardWrapper = styled.div`
     width: 100%;
@@ -95,4 +97,4 @@ export default function LogCard(props) {
             <Preview>{props.preview}</Preview>
         </LogCardWrapper>
     );
-} 
+}
