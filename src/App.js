@@ -35,6 +35,7 @@ function AppConent() {
 
     // 로그인 시 렌더링할 때 accessToken 업데이트
     useEffect(() => {
+        const initLogin = async () => {
         const accessToken = localStorage.getItem('accessToken');
 
         if(!accessToken) {
