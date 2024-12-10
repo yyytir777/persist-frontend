@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logSave from "../components/api/log/LogSaveApi";
 import uploadImage from "../components/api/s3/UploadImage";
+import InputThumbnail from "../components/editor/InputThumbnail";
 
 const EditorWrapper = styled.div`
     min-height: 100%;
@@ -42,32 +43,18 @@ const EditorWrapper = styled.div`
 `;
 
 const InputThumbnailWrapper = styled.div`
-
     display: flex;
     justify-content: center;
-`;
-
-const InputThumbnailButton = styled.div`
-    height: 300px;
-    width: 500px;
-    background-color: whitesmoke;
-    background-image: ${({ $imageUrl }) => $imageUrl ? `url(${$imageUrl})` : "none"};
-    background-size: cover;
-    background-position: center;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-
-    p {
-        ${({ $imageUrl }) => $imageUrl && "display: none;"}
-    }
+    
 `;
+
 
 const InputTitle = styled.input`
     width: 100%;
     font-size: 36px;
-    margin-bottom: 10px;
+    margin: 10px;
     border: none;
     outline: none;
 
@@ -80,6 +67,7 @@ const InputTitle = styled.input`
 const ButtonWrapper = styled.div`
 
 `;
+
 
 export default function Editor() {
     const [content, setContent] = useState('');
@@ -169,21 +157,6 @@ export default function Editor() {
         if(e.key === 'Escape' && editorRef.current) {
             console.log('blurred');
             hiddenButtonRef.current.focus();
-        }
-    }
-
-    const handleThumbnailDrop = async (event) => {
-        event.preventDefault();
-        const files = event.dataTransfer.files;
-
-        if(files && files.length > 0) {
-            const file = files[0];
-
-            if(file.type.startsWith('image/')) {
-                const imageUrl = await uploadImage(file);
-                console.log('imageUrl : ', imageUrl);
-                setThumbnail(imageUrl);
-            }
         }
     }
 
@@ -284,12 +257,7 @@ export default function Editor() {
     return(
         <EditorWrapper data-color-mode="light">
             <InputThumbnailWrapper>
-                <InputThumbnailButton
-                    onDrop={handleThumbnailDrop}
-                    onDragOver={(e) => e.preventDefault()}
-                    $imageUrl={thumbnail}>
-                    <p>여기에 썸네일을 놓아주세요</p>
-                </InputThumbnailButton>
+                <InputThumbnail thumbnail={thumbnail} setThumbnail={setThumbnail}/>
             </InputThumbnailWrapper>
 
             <InputTitle 
