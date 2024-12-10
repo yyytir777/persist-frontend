@@ -4,14 +4,17 @@ import LogCard from "./LogCard";
 
 const Grid = styled.div`
     padding:30px 0px;
-    width: 100%;
-    height: auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 고정된 너비 */
+    grid-template-columns: repeat(var(--card-count),calc(var(--width) - (32px * var(--spacer) / var(--card-count)))); /* 고정된 너비 */
     gap: 35px 20px; /* 카드 사이의 간격 */
-    justify-items: center;
-    justify-content: center;
-    box-sizing: border-box;
+    --card-count: 4;
+    --width: 25%;
+    --spacer: calc(var(--card-count) - 1);
+
+    @media screen and (max-width : 1440px) {
+        --card-count: 4;
+        --width: 25%;
+    }
 `;
 
 const LogGrid = ({ logs }) => {

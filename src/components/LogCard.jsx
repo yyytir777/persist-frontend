@@ -5,7 +5,7 @@ import Author from "./Author";
 import defaultImage from "../img/default_image.png"
 
 const LogCardWrapper = styled.div`
-    width: 100%;
+    width: 320px;
     height: 400px;
     background-color: whitesmoke;
     border-radius: 2%;
@@ -35,7 +35,7 @@ const LogCardImage = styled.img`
     object-fit: cover;
     object-position: center;
     width: 100%;
-    height: 200px;
+    height: 180px;
 `;
 
 const Title = styled.div`
