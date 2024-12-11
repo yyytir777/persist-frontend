@@ -5,12 +5,10 @@ import Author from "./Author";
 import defaultImage from "../img/default_image.png"
 
 const LogCardWrapper = styled.div`
-    width: 320px;
-    height: 400px;
     background-color: whitesmoke;
     border-radius: 2%;
     display: flex;
-    flex-direction: column;
+    flex-flow: column nowrap;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease; /* 부드러운 이동 효과 */
 
@@ -32,10 +30,10 @@ const Upper = styled.div`
 const LogDate = styled.div``;
 
 const LogCardImage = styled.img`
+    aspect-ratio: 16 / 9; /* 가로:세로 비율 설정 */
+    width: 100%;
     object-fit: cover;
     object-position: center;
-    width: 100%;
-    height: 180px;
 `;
 
 const Title = styled.div`

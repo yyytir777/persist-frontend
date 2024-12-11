@@ -5,13 +5,26 @@ import LogGrid from "../components/LogGrid";
 import apiClient from "../components/api/AxiosInterceptor";
 
 const HomeWrapper = styled.div`
-    width: 100%;
-    min-height: 100%;
-    padding: 0px 10%;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+
     padding-bottom: 100px;
     justify-content: flex-start;
     flex-direction: column;
     align-items: center;
+
+    @media screen and (max-width: 1536px) {
+        width: 1352px;
+    }
+
+    @media screen and (max-width: 1376px) {
+        width: 1008px;
+    }
+    
+    @media screen and (max-width: 1032px) {
+        width: 90%;
+    }
 `;
 
 const SearchBarWrapper = styled.div`
