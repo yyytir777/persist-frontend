@@ -17,12 +17,13 @@ const Grid = styled.div`
     gap: 24px; /* 카드 사이의 간격 */
     
 
+
     @media screen and (max-width: 1536px) {
         --card-count: 4;
         --width: 25%;
     }
 
-    @media screen and (max-width: 1360px) {
+    @media screen and (max-width: 1370px) {
         --card-count: 3;
         --width: 33.33%;
     }

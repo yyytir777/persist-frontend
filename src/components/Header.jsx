@@ -11,6 +11,7 @@ import apiClient from "./api/AxiosInterceptor";
 
 const HeaderContainer = styled.div`
     height: 60px;
+    position: relative;
 `;
 
 const HeaderWrapper = styled.div`
@@ -30,6 +31,9 @@ const HeaderMenuIcon = styled.img`
 `;
 
 const HeaderLogo = styled.h1`
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     cursor: pointer;
 `;
 

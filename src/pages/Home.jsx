@@ -14,11 +14,15 @@ const HomeWrapper = styled.div`
     flex-direction: column;
     align-items: center;
 
+    @media screen and (max-width: 1920px) {
+        width: 1352px;
+    }
+
     @media screen and (max-width: 1536px) {
         width: 1352px;
     }
 
-    @media screen and (max-width: 1376px) {
+    @media screen and (max-width: 1370px) {
         width: 1024px;
     }
     
