@@ -5,7 +5,7 @@ import LogGrid from "../components/LogGrid";
 import apiClient from "../components/api/AxiosInterceptor";
 
 const HomeWrapper = styled.div`
-    height: fit-content;
+    min-height: 100%;
     margin-left: auto;
     margin-right: auto;
 
@@ -19,10 +19,10 @@ const HomeWrapper = styled.div`
     }
 
     @media screen and (max-width: 1376px) {
-        width: 1008px;
+        width: 1024px;
     }
     
-    @media screen and (max-width: 1032px) {
+    @media screen and (max-width: 1024px) {
         width: 90%;
     }
 `;

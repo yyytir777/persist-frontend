@@ -6,7 +6,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import NotFoundPage from './pages/NotFoundPage';
-import Login from './pages/login/Login';
+import LoginPage from './pages/login/LoginPage';
+import SignUpPage from './pages/SignUp';
 import GoogleLoginHandler from './pages/login/GoogleLoginHandler';
 import KakaoLoginHandler from './pages/login/KakaoLoginHandler';
 import SplashScreen from './pages/SplashScreen';
@@ -60,7 +61,8 @@ function AppConent() {
                 <Content>
                     <Routes>
                         <Route path='/' element={<Home />} />
-                        <Route path='/login' element={<Login />} />
+                        <Route path='/login' element={<LoginPage />} />
+                        <Route path='/signup' element={<SignUpPage />} />
 
                         <Route path='/logs/:id' element={<LogDetail />} />
                         {/* <Route path='/settings' element={<Settings />} /> */}

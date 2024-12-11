@@ -30,7 +30,7 @@ const Upper = styled.div`
 const LogDate = styled.div``;
 
 const LogCardImage = styled.img`
-    aspect-ratio: 16 / 9; /* 가로:세로 비율 설정 */
+    aspect-ratio: 16 / 9;
     width: 100%;
     object-fit: cover;
     object-position: center;

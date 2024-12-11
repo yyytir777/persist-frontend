@@ -19,7 +19,7 @@ const ProviderWrapper = styled.div`
     flex-direction: column;
 `;
 
-export default function Login() {
+export default function LoginPage() {
 
     const HandlerClickGoogleLogin = () => {
         const link = `https://accounts.google.com/o/oauth2/v2/auth`;
