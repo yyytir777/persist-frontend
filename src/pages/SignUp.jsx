@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import apiClient from "../components/api/AxiosInterceptor";
 
 const SignUpWrapper = styled.div`
     height: 100%;
@@ -27,6 +29,9 @@ const NameForm = styled.form`
     gap: 15px;
 `;
 
+const EmailInputWrapper = styled.div`
+`;
+
 const NameInputWrapper = styled.div`
 `;
 
@@ -37,6 +42,10 @@ const SubmitWrapper = styled.div`
 `;
 
 export default function SignUpPage() {
+    const location = useLocation();
+    const email = location.state?.email || "";
+    console.log('location : ', location);
+
     const [formData, setFormData] = useState({
         name: "",
         logName: "",
@@ -51,15 +60,24 @@ export default function SignUpPage() {
         }));
     };
     
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log('이메일 : ', email);
         console.log('이름 : ', formData.name);
         console.log('로그 이름 : ', formData.logName);
         console.log('submitted');
-    }
-
-    const handleSignUp = (event) => {
-        console.log('click signup button');
+        
+        try {
+            const response = await apiClient.post('/api/v1/member/register', {
+                email: email,
+                name: formData.name,
+                logName: formData.logName,
+                type: 'KAKAO'
+            });
+            console.log(response.data);
+        } catch(error) {
+            console.log(error);
+        }
     }
 
     return(
@@ -67,8 +85,19 @@ export default function SignUpPage() {
             <SignUp>
                 <Title>회원가입</Title>
                 <NameForm onSubmit={handleSubmit}>
+                    <EmailInputWrapper>
+                        <label htmlFor="email">이메일</label>
+                        <input
+                            id="email"
+                            type="text"
+                            name="email"
+                            value={email}
+                            readOnly
+                        />
+                    </EmailInputWrapper>
+
                     <NameInputWrapper>
-                        <label for="name">이름</label>
+                        <label htmlFor="name">이름</label>
                         <input
                             id="name"
                             type="text"
@@ -80,7 +109,7 @@ export default function SignUpPage() {
                     </NameInputWrapper>
 
                     <LogNameInputWrapper>
-                        <label for="logName">로그 이름</label>
+                        <label htmlFor="logName">로그 이름</label>
                         <input 
                             id="logName"
                             type="text"
@@ -92,10 +121,7 @@ export default function SignUpPage() {
                     </LogNameInputWrapper>
 
                     <SubmitWrapper>
-                        <input 
-                            type="submit"
-                            value="회원가입"
-                        />
+                        <button type="submit">회원가입</button>
                     </SubmitWrapper>
                 </NameForm>
             </SignUp>

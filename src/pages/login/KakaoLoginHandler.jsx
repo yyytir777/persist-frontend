@@ -29,7 +29,8 @@ export default function KakaoLoginHandler() {
                     const isSignUp = window.confirm(`회원가입이 필요합니다.\n 이메일: ${email}로 가입하시겠습니까?`);
 
                     if(isSignUp) {
-                        navigate('/sign-up', {state: { email }});
+                        console.log('navigated to signup');
+                        navigate('/SignUpPage', { state: { email: email } });
                     } else {
                         navigate('/');
                     }
