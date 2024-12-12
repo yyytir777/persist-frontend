@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import apiClient from "../components/api/AxiosInterceptor";
 
@@ -13,38 +13,63 @@ const SignUpWrapper = styled.div`
 `
 
 const SignUp = styled.div`
-    width: 400px;
-    height: 800px;
+    width: 50%;
+    height: 100%;
+    margin: 100px 0px;
+    display:flex;
+    flex-direction: column;
 `;
+
 const Title = styled.h1`
     margin-bottom: 20px;
     font-size: 24px;
     text-align: center;
 `;
 
-const NameForm = styled.form`
+const RegisterForm = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 40px;
 `;
 
 const EmailInputWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
 
 const NameInputWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+
 `;
 
 const LogNameInputWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+
 `;
 
 const SubmitWrapper = styled.div`
 `;
 
+const Label = styled.label`
+    margin: 16px 0px;
+`;
+
+const Input = styled.input`
+    width: 80%;
+    height: 36px;
+`;
+
+const Button = styled.button`
+
+`;
+
 export default function SignUpPage() {
     const location = useLocation();
+    const navigate = useNavigate();
     const email = location.state?.email || "";
-    console.log('location : ', location);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -75,6 +100,7 @@ export default function SignUpPage() {
                 type: 'KAKAO'
             });
             console.log(response.data);
+            navigate('/');
         } catch(error) {
             console.log(error);
         }
@@ -84,10 +110,10 @@ export default function SignUpPage() {
         <SignUpWrapper>
             <SignUp>
                 <Title>회원가입</Title>
-                <NameForm onSubmit={handleSubmit}>
+                <RegisterForm onSubmit={handleSubmit}>
                     <EmailInputWrapper>
-                        <label htmlFor="email">이메일</label>
-                        <input
+                        <Label htmlFor="email">이메일</Label>
+                        <Input
                             id="email"
                             type="text"
                             name="email"
@@ -97,33 +123,33 @@ export default function SignUpPage() {
                     </EmailInputWrapper>
 
                     <NameInputWrapper>
-                        <label htmlFor="name">이름</label>
-                        <input
+                        <Label htmlFor="name">이름</Label>
+                        <Input
                             id="name"
                             type="text"
                             name="name"
-                            placeholder="Name"
+                            placeholder="이름을 입력하세요"
                             onChange={handleChange}
                             value={formData.name}
                         />
                     </NameInputWrapper>
 
                     <LogNameInputWrapper>
-                        <label htmlFor="logName">로그 이름</label>
-                        <input 
+                        <Label htmlFor="logName">로그 이름</Label>
+                        <Input 
                             id="logName"
                             type="text"
                             name="logName"
-                            placeholder="logName"
+                            placeholder="로그이름을 입력하세요"
                             onChange={handleChange}
                             value={formData.logName}
                         />
                     </LogNameInputWrapper>
 
                     <SubmitWrapper>
-                        <button type="submit">회원가입</button>
+                        <Button type="submit">회원가입</Button>
                     </SubmitWrapper>
-                </NameForm>
+                </RegisterForm>
             </SignUp>
         </SignUpWrapper>
     );
