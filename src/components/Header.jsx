@@ -8,6 +8,7 @@ import accessTokenReissueApi from "./api/AccessTokenReissueApi";
 import handleHome from "./handler/handleHome";
 import { useLoginState } from "./context/LoginContext";
 import apiClient from "./api/AxiosInterceptor";
+import LoginModal from "./modal/LoginModal";
 
 const HeaderContainer = styled.div`
     height: 60px;
@@ -57,15 +58,20 @@ export default function Header() {
     
     const {isLogin, setLogout} = useLoginState();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const navigate = useNavigate();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     }
 
+    const openLoginModal = () => {
+        setIsModalOpen(true);
+    }
 
-    const handleLogin = () => {
-        navigate('/login');
+    const closeLoginModal = () => {
+        setIsModalOpen(false);
     }
 
     const handleLogout = () => {
@@ -80,7 +86,7 @@ export default function Header() {
         const accessToken = localStorage.getItem('accessToken');
 
         if(!accessToken) {
-            navigate('/login');
+            openLoginModal();
             return;
         }
 
@@ -102,7 +108,7 @@ export default function Header() {
         } else if (response?.data.code === 'T005') {
             alert(response?.data.errorMessage);
             localStorage.removeItem('accessToken');
-            window.location.href = '/login';
+            openLoginModal();
         }
 
         if(response?.data.success) {
@@ -121,11 +127,11 @@ export default function Header() {
                     {isLogin ? (
                         <HeaderButton onClick={handleLogout}>Logout</HeaderButton>
                     ) : (
-                        <HeaderButton onClick={handleLogin}>LogIn</HeaderButton>
+                        <HeaderButton onClick={openLoginModal}>LogIn</HeaderButton>
                     )}
                 </LogInWrapper>
             </HeaderWrapper>
-            {isMenuOpen && (<MenuBar toggleMenu={toggleMenu}/>)}
+            <LoginModal isModalOpen={isModalOpen} closeLoginModal={closeLoginModal} />
         </HeaderContainer>
     );
 }

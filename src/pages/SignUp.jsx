@@ -15,13 +15,16 @@ const SignUpWrapper = styled.div`
 const SignUp = styled.div`
     width: 50%;
     height: 100%;
-    margin: 100px 0px;
+    margin: 30px 0px;
     display:flex;
     flex-direction: column;
+
+    @media screen and (max-width: 620px) {
+        width: 70%;
+    }
 `;
 
 const Title = styled.h1`
-    margin-bottom: 20px;
     font-size: 24px;
     text-align: center;
 `;
@@ -30,27 +33,20 @@ const RegisterForm = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 12px;
 `;
 
-const EmailInputWrapper = styled.div`
+const InputWrapper = styled.div`
     display: flex;
     flex-direction: column;
-`;
-
-const NameInputWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-
-`;
-
-const LogNameInputWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-
+    margin: 0 auto; 
 `;
 
 const SubmitWrapper = styled.div`
+    margin: 0 24%;
+`;
+
+const InputContainer = styled.div`
 `;
 
 const Label = styled.label`
@@ -58,8 +54,16 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-    width: 80%;
+    width: 100%;
     height: 36px;
+
+    @media screen and (max-width: 1920px) {
+        width: 300px;
+    }
+
+    @media screen and (max-width: 620px) {
+        width: 200px;
+    }
 `;
 
 const Button = styled.button`
@@ -111,40 +115,46 @@ export default function SignUpPage() {
             <SignUp>
                 <Title>회원가입</Title>
                 <RegisterForm onSubmit={handleSubmit}>
-                    <EmailInputWrapper>
+                    <InputWrapper>
                         <Label htmlFor="email">이메일</Label>
-                        <Input
-                            id="email"
-                            type="text"
-                            name="email"
-                            value={email}
-                            readOnly
-                        />
-                    </EmailInputWrapper>
+                        <InputContainer>
+                            <Input
+                                id="email"
+                                type="text"
+                                name="email"
+                                value={email}
+                                readOnly
+                            />
+                        </InputContainer>
+                    </InputWrapper>
 
-                    <NameInputWrapper>
+                    <InputWrapper>
                         <Label htmlFor="name">이름</Label>
-                        <Input
-                            id="name"
-                            type="text"
-                            name="name"
-                            placeholder="이름을 입력하세요"
-                            onChange={handleChange}
-                            value={formData.name}
-                        />
-                    </NameInputWrapper>
+                        <InputContainer>
+                            <Input
+                                id="name"
+                                type="text"
+                                name="name"
+                                placeholder="이름을 입력하세요"
+                                onChange={handleChange}
+                                value={formData.name}
+                            />
+                        </InputContainer>
+                    </InputWrapper>
 
-                    <LogNameInputWrapper>
+                    <InputWrapper>
                         <Label htmlFor="logName">로그 이름</Label>
-                        <Input 
-                            id="logName"
-                            type="text"
-                            name="logName"
-                            placeholder="로그이름을 입력하세요"
-                            onChange={handleChange}
-                            value={formData.logName}
-                        />
-                    </LogNameInputWrapper>
+                        <InputContainer>
+                            <Input 
+                                id="logName"
+                                type="text"
+                                name="logName"
+                                placeholder="로그이름을 입력하세요"
+                                onChange={handleChange}
+                                value={formData.logName}
+                            />
+                        </InputContainer>
+                    </InputWrapper>
 
                     <SubmitWrapper>
                         <Button type="submit">회원가입</Button>

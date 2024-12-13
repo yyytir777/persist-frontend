@@ -6,7 +6,6 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import NotFoundPage from './pages/NotFoundPage';
-import LoginPage from './pages/login/LoginPage';
 import SignUpPage from './pages/SignUp';
 import GoogleLoginHandler from './pages/login/GoogleLoginHandler';
 import KakaoLoginHandler from './pages/login/KakaoLoginHandler';
@@ -15,7 +14,9 @@ import LogDetail from './components/LogDetail';
 import { LoginProvider, useLoginState } from './components/context/LoginContext';
 import checkLogin from './components/api/CheckLogin';
 import Editor from './pages/Editor';
+import ReactModal from 'react-modal';
 
+ReactModal.setAppElement('#root');
 
 const Root = styled.div`
     width: 100%;
@@ -61,8 +62,7 @@ function AppConent() {
                 <Content>
                     <Routes>
                         <Route path='/' element={<Home />} />
-                        <Route path='/login' element={<LoginPage />} />
-                        <Route path='/SignUpPage' element={<SignUpPage />} />
+                        <Route path='/signup' element={<SignUpPage />} />
 
                         <Route path='/logs/:id' element={<LogDetail />} />
                         {/* <Route path='/settings' element={<Settings />} /> */}

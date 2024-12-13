@@ -30,7 +30,7 @@ export default function KakaoLoginHandler() {
 
                     if(isSignUp) {
                         console.log('navigated to signup');
-                        navigate('/SignUpPage', { state: { email: email } });
+                        navigate('/signup', { state: { email: email } });
                     } else {
                         navigate('/');
                     }
