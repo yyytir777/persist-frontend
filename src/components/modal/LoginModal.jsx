@@ -9,7 +9,7 @@ const LoginWrapper = styled.div`
     min-height: 100%;
     display: flex;
     justify-content: center;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
 `;
 
@@ -42,7 +42,7 @@ export default function LoginModal({ isModalOpen, closeLoginModal }) {
         <ReactModal
             style={{
                 content: {
-                    width: '60%',
+                    width: '30%',
                     height: '30%',
                     margin: 'auto', // 중앙 배치를 위해
                     display: 'flex', // 내부 콘텐츠 정렬

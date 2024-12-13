@@ -124,13 +124,12 @@ export default function Header() {
                 <HeaderLogo onClick={handleHome}>Persist</HeaderLogo>
                 <LogInWrapper>
                     <HeaderUserIcon src={userIcon} alt="user" onClick={handleMemberPage} />
-                    {isLogin ? (
-                        <HeaderButton onClick={handleLogout}>Logout</HeaderButton>
-                    ) : (
-                        <HeaderButton onClick={openLoginModal}>LogIn</HeaderButton>
-                    )}
+                    <HeaderButton onClick={isLogin ? handleLogout : openLoginModal}>
+                        {isLogin ? 'Logout' : 'LogIn'}
+                    </HeaderButton>
                 </LogInWrapper>
             </HeaderWrapper>
+            {isMenuOpen && (<MenuBar toggleMenu={toggleMenu}/>)}
             <LoginModal isModalOpen={isModalOpen} closeLoginModal={closeLoginModal} />
         </HeaderContainer>
     );

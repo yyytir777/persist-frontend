@@ -34,12 +34,13 @@ const RegisterForm = styled.form`
     display: flex;
     flex-direction: column;
     gap: 12px;
+    align-items: center;
 `;
 
 const InputWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 0 auto; 
+    margin: 0 auto;
 `;
 
 const SubmitWrapper = styled.div`
@@ -50,7 +51,7 @@ const InputContainer = styled.div`
 `;
 
 const Label = styled.label`
-    margin: 16px 0px;
+    margin: 8px 0px;
 `;
 
 const Input = styled.input`
@@ -67,7 +68,6 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-
 `;
 
 export default function SignUpPage() {
