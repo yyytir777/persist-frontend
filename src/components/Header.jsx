@@ -113,7 +113,7 @@ export default function Header() {
 
         if(response?.data.success) {
             const memberId = response?.data.result;
-            navigate(`/${memberId}`);    
+            navigate(`/repository/${memberId}`);
         }
     }
 

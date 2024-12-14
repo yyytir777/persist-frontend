@@ -48,7 +48,7 @@ export default function Home() {
             console.log(response.data);
             setLogs(Array.isArray(response.data.result) ? response.data.result : []);
         } catch (error) {
-            console.log(error.data);
+            console.log(error);
         }
     }, []); // setIsLogIn이 변경될 때만 새로 생성
 

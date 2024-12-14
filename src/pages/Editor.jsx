@@ -3,7 +3,7 @@ import MDEditor, { commands } from "@uiw/react-md-editor";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import logSave from "../components/api/log/LogSaveApi";
+import saveLog from "../components/api/log/SaveLogApi";
 import uploadImage from "../components/api/s3/UploadImage";
 import InputThumbnail from "../components/editor/InputThumbnail";
 
@@ -130,7 +130,7 @@ export default function Editor() {
         setTitle(event.target.value);
     }
 
-    const handleLogSave = async () => {
+    const handleSaveLog = async () => {
         console.log("title : ", title);
         console.log("thumbnail : ", thumbnail);
         console.log("content : ", content);
@@ -145,7 +145,7 @@ export default function Editor() {
         }
 
         try {
-            const logId = await logSave(title, thumbnail, content);
+            const logId = await saveLog(title, thumbnail, content);
             console.log('logId : ', logId);
             if(logId) navigate(`/logs/${logId}`);
         } catch (error) {
@@ -298,7 +298,7 @@ export default function Editor() {
             />
             <button ref={hiddenButtonRef} style={{ opacity: 0, position: "absolute", pointerEvents: "none" }}></button>
             <ButtonWrapper>
-                <button onClick={handleLogSave}>게시하기</button>
+                <button onClick={handleSaveLog}>게시하기</button>
             </ButtonWrapper>
         </EditorWrapper>
     );  

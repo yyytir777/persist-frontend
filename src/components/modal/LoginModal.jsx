@@ -11,6 +11,7 @@ const LoginWrapper = styled.div`
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    gap: 16px;
 `;
 
 const ProviderWrapper = styled.div`
@@ -63,11 +64,9 @@ export default function LoginModal({ isModalOpen, closeLoginModal }) {
             onRequestClose={closeLoginModal}>
             <LoginWrapper>
                 <ProviderWrapper>
-                    <h2>Google Login</h2>
                     <img src={googleLoignImg} alt="googleLogin" onClick={HandlerClickGoogleLogin} />
                 </ProviderWrapper>
                 <ProviderWrapper>
-                    <h2>Kakao Login</h2>
                     <img src={kakaoLoginImg} alt="kakaoLogin" onClick={HandlerClickKakaoLogin} />
                 </ProviderWrapper>
             </LoginWrapper>

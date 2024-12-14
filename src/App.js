@@ -15,6 +15,7 @@ import { LoginProvider, useLoginState } from './components/context/LoginContext'
 import checkLogin from './components/api/CheckLogin';
 import Editor from './pages/Editor';
 import ReactModal from 'react-modal';
+import MemberPage from './pages/member/MemberPage';
 
 ReactModal.setAppElement('#root');
 
@@ -65,6 +66,7 @@ function AppConent() {
                         <Route path='/signup' element={<SignUpPage />} />
 
                         <Route path='/logs/:id' element={<LogDetail />} />
+                        <Route path='/repository/:id' element={<MemberPage />} />
                         {/* <Route path='/settings' element={<Settings />} /> */}
 
                         {/* Redirect Login Handler Page */}

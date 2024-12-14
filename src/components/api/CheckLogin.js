@@ -6,7 +6,6 @@ const checkLogin = async () => {
         console.log(`${response.data.success} in checkLogin`);
         return response.data.success;
     } catch (error) {
-        console.log(error);
         return false;
     }
 }
