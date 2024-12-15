@@ -5,7 +5,6 @@ import userIcon from '../img/icon_user.png';
 import { useNavigate } from "react-router-dom";
 import MenuBar from "./MenuBar";
 import accessTokenReissueApi from "./api/AccessTokenReissueApi";
-import handleHome from "./handler/handleHome";
 import { useLoginState } from "./context/LoginContext";
 import apiClient from "./api/AxiosInterceptor";
 import LoginModal from "./modal/LoginModal";
@@ -121,7 +120,7 @@ export default function Header() {
         <HeaderContainer>
             <HeaderWrapper>
                 <HeaderMenuIcon src={menuIcon} alt="menu" onClick={toggleMenu}/>
-                <HeaderLogo onClick={handleHome}>Persist</HeaderLogo>
+                <HeaderLogo><a href="/" style={{textDecoration: `none`, color: `inherit`}}>Persist</a></HeaderLogo>
                 <LogInWrapper>
                     <HeaderUserIcon src={userIcon} alt="user" onClick={handleMemberPage} />
                     <HeaderButton onClick={isLogin ? handleLogout : openLoginModal}>

@@ -127,6 +127,7 @@ export default function Editor() {
     }
 
     const handleTitleChange = (event) => {
+        event.preventDefault();
         setTitle(event.target.value);
     }
 
@@ -154,6 +155,7 @@ export default function Editor() {
     }
 
     const handleKeyDown = (e) => {
+        e.preventDefault();
         if(e.key === 'Escape' && editorRef.current) {
             console.log('blurred');
             hiddenButtonRef.current.focus();

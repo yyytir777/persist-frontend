@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import closedImg from '../img/closed_img.png';
-import handleHome from "./handler/handleHome";
 
 const MenuOverlay = styled.div`
     position: fixed;
@@ -67,10 +66,10 @@ export default function MenuBar({ toggleMenu }) {
                     <MenuClosedImg src={closedImg} onClick={toggleMenu}/>
                 </MenuHeaderWrapper>
                 <MenuWrapper>
-                    <MenuItem onClick={handleHome}>Home</MenuItem>
-                    <MenuItem>Hot</MenuItem>
-                    <MenuItem>Most Viewed</MenuItem>
-                    <MenuItem>Recent</MenuItem>
+                    <a href="/" style={{textDecoration: `none`, color: `inherit`}}><MenuItem>Home</MenuItem></a>
+                    <a href="/" style={{textDecoration: `none`, color: `inherit`}}><MenuItem>Hot</MenuItem></a>
+                    <a href="/" style={{textDecoration: `none`, color: `inherit`}}><MenuItem>Most Viewd</MenuItem></a>
+                    <a href="/" style={{textDecoration: `none`, color: `inherit`}}><MenuItem>Recent</MenuItem></a>
                 </MenuWrapper>
             </MenuContent>
         </>
