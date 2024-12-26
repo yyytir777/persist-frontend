@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 const CategoryWrapper = styled.div`
     background-color: whitesmoke;
-    
+    aspect-ratio: 16 / 9;
+
 `;
 
 const CategoryCard = ({ category }) => {

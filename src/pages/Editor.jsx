@@ -155,8 +155,8 @@ export default function Editor() {
     }
 
     const handleKeyDown = (e) => {
-        e.preventDefault();
         if(e.key === 'Escape' && editorRef.current) {
+            e.preventDefault();
             console.log('blurred');
             hiddenButtonRef.current.focus();
         }
