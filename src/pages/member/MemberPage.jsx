@@ -27,7 +27,7 @@ const MemberPageWrapper = styled.div`
 `;
 
 const MemberInfoWrapper = styled.div`
-    padding: 10% 20%;
+    margin: 5% 20%;
 `;
 
 const TabWrapper = styled.div`

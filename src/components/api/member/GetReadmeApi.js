@@ -6,11 +6,11 @@ const getReadmeApi = async ( memberId ) => {
         if(response.data.success === true) return response.data.result;
         else {
             console.log('API responsed with an unsuccessful result');
-            return [];
+            return '';
         }
     } catch(error) {
         console.error(error);
-        return [];
+        return '';
     }
 }
 

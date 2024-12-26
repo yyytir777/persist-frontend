@@ -43,7 +43,7 @@ const TabContent = ({ activeTab, memberId }) => {
                 return null;
 
         }
-    }, [activeTab]);
+    }, [activeTab, memberId]);
 
     if (activeTab === 'Log') {
         return(<LogGrid logs={logs}/>);
