@@ -12,22 +12,29 @@ const TabName = styled.div`
     width: 96px;
     display: flex;
     justify-content: center;
+
+    cursor: pointer;
 `;
 
-const Category = () => {
+const Tab = ({ onChangeTab }) => {
+
     return(
         <CategoryList>
-            <TabName>
+
+            <TabName onClick={() => onChangeTab('Log')}>
                 <p>Log</p>
             </TabName>
-            <TabName>
+
+            <TabName onClick={() => onChangeTab('Readme')}>
                 <p>Readme</p>
             </TabName>
-            <TabName>
+
+            <TabName onClick={() => onChangeTab('Category')}>
                 <p>Category</p>
             </TabName>
+
         </CategoryList>
     );
 }
 
-export default Category;
+export default Tab;

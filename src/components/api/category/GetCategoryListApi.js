@@ -1,10 +1,8 @@
 import apiClient from "../AxiosInterceptor";
 
-const saveLogApi = async (title, thumbnail, content) => {
+const getCategoryListApi = async () => {
     try {
-        const response = await apiClient.post(`/api/v1/log/create`,
-            {title, thumbnail, content}
-        );
+        const response = await apiClient.get(`/api/v1/category/all`);
 
         if(response.data.success === true) return response.data.result;
         else {
@@ -12,9 +10,10 @@ const saveLogApi = async (title, thumbnail, content) => {
             return [];
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return [];
     }
+
 }
 
-export default saveLogApi;
+export default getCategoryListApi;

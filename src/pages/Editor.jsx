@@ -3,9 +3,9 @@ import MDEditor, { commands } from "@uiw/react-md-editor";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import saveLog from "../components/api/log/SaveLogApi";
 import uploadImage from "../components/api/s3/UploadImage";
 import InputThumbnail from "../components/editor/InputThumbnail";
+import saveLogApi from "../components/api/log/SaveLogApi";
 
 const EditorWrapper = styled.div`
     min-height: 100%;
@@ -146,7 +146,7 @@ export default function Editor() {
         }
 
         try {
-            const logId = await saveLog(title, thumbnail, content);
+            const logId = await saveLogApi(title, thumbnail, content);
             console.log('logId : ', logId);
             if(logId) navigate(`/logs/${logId}`);
         } catch (error) {

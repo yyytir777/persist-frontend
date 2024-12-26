@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchBar from '../components/SearchBar';
 import LogGrid from "../components/LogGrid";
-import apiClient from "../components/api/AxiosInterceptor";
+import getLogApi from "../components/api/log/GetLogApi";
 
 const HomeWrapper = styled.div`
     min-height: 100%;
@@ -42,19 +42,15 @@ const SearchBarWrapper = styled.div`
 export default function Home() {
     const [logs, setLogs] = useState([]);
 
-    const fetchLogs = useCallback(async () => {
-        try {
-            const response = await apiClient.get('/api/v1/log/all');
-            console.log(response.data);
-            setLogs(Array.isArray(response.data.result) ? response.data.result : []);
-        } catch (error) {
-            console.log(error);
-        }
-    }, []); // setIsLogIn이 변경될 때만 새로 생성
-
     useEffect(() => {
+        const fetchLogs = async () => {
+            const fetchLog = await getLogApi();
+            console.log(fetchLog);
+            setLogs(fetchLog);
+        }; // setIsLogIn이 변경될 때만 새로 생성
+    
         fetchLogs();
-    }, [fetchLogs]); // fetchLogs를 의존성 배열에 추가
+    }, []); // fetchLogs를 의존성 배열에 추가
     
     return(
         <HomeWrapper>

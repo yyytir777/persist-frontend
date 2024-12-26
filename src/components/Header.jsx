@@ -4,7 +4,7 @@ import menuIcon from '../img/icon_menu.svg';
 import userIcon from '../img/icon_user.png';
 import { useNavigate } from "react-router-dom";
 import MenuBar from "./MenuBar";
-import accessTokenReissueApi from "./api/AccessTokenReissueApi";
+import accessTokenReissueApi from "./api/auth/AccessTokenReissueApi";
 import { useLoginState } from "./context/LoginContext";
 import apiClient from "./api/AxiosInterceptor";
 import LoginModal from "./modal/LoginModal";

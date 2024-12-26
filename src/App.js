@@ -12,10 +12,11 @@ import KakaoLoginHandler from './pages/login/KakaoLoginHandler';
 import SplashScreen from './pages/SplashScreen';
 import LogDetail from './components/LogDetail';
 import { LoginProvider, useLoginState } from './components/context/LoginContext';
-import checkLogin from './components/api/CheckLogin';
+import checkLogin from './components/api/auth/CheckLogin';
 import Editor from './pages/Editor';
 import ReactModal from 'react-modal';
 import MemberPage from './pages/member/MemberPage';
+import DemoPage from './pages/DemoPage';
 
 ReactModal.setAppElement('#root');
 
@@ -74,6 +75,10 @@ function AppConent() {
                         <Route path='/oauth/callback/kakao' element={<KakaoLoginHandler />} />
 
                         <Route path='/editor' element={<Editor />} />
+
+
+                        {/* demo page */}
+                        <Route path="/demo" element={<DemoPage />} />
 
                         {/* 404 page */}
                         <Route path="*" element={<NotFoundPage />} />

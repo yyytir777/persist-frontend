@@ -1,5 +1,5 @@
 import axios from "axios";
-import accessTokenReissueApi from "./AccessTokenReissueApi";
+import accessTokenReissueApi from "./auth/AccessTokenReissueApi";
 
 // baseURL, 기본 headers 설정
 const apiClient = axios.create({

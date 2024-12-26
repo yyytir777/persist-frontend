@@ -1,4 +1,4 @@
-import apiClient from "./AxiosInterceptor";
+import apiClient from "../AxiosInterceptor";
 
 const checkLogin = async () => {
     try {

@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import MemberInfo from "../../components/repository/MemberInfo";
-import Category from "../../components/repository/Category";
 import { useState } from "react";
 import TabContent from "../../components/repository/TabContent";
+import Tab from "../../components/repository/Tab";
 
 const MemberPageWrapper = styled.div`
     min-height: 100%;
@@ -27,36 +27,16 @@ const MemberPageWrapper = styled.div`
 `;
 
 const MemberInfoWrapper = styled.div`
-    margin-bottom: 48px;
+    padding: 10% 20%;
 `;
 
-const CategoryWrapper = styled.div`
+const TabWrapper = styled.div`
 
 `;
 
 const MemberPage = () => {
     const { id } = useParams();
     const [activeTab, setActiveTab] = useState('Log');
-    const [logs, setLogs] = useState();
-    const [categories, setCategories] = useState();
-    const [readme, setReadme] = useState();
-
-    // useEffect(() => {
-
-    // })();
-
-    const content = (() => {
-        switch(activeTab) {
-            case "Log":
-                return logs;
-            case "Readme":
-                return readme;
-            case "Categories":
-                return categories;
-            default:
-                return null;
-        }
-    });
 
     return(
         <MemberPageWrapper>
@@ -65,11 +45,11 @@ const MemberPage = () => {
                 <MemberInfo id={id}/>
             </MemberInfoWrapper>
 
-            <CategoryWrapper>
-                <Category />
-            </CategoryWrapper>
+            <TabWrapper>
+                <Tab onChangeTab={setActiveTab} />
+            </TabWrapper>
             
-            <TabContent tab={activeTab} content={content}/>
+            <TabContent activeTab={activeTab} memberId={id}/>
 
         </MemberPageWrapper>
     );

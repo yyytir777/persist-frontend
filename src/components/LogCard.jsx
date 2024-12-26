@@ -5,6 +5,7 @@ import Author from "./Author";
 import defaultImage from "../img/default_image.png"
 
 const LogCardWrapper = styled.div`
+    height: var(--log-card-height);
     background-color: whitesmoke;
     border-radius: 2%;
     display: flex;
