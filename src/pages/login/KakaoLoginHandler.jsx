@@ -7,18 +7,22 @@ export default function KakaoLoginHandler() {
 
     const navigate = useNavigate();
     const { setLogin } = useLoginState();
-    const code = new URL(window.location.href).searchParams.get('code');
 
     useEffect(() => {
         const getToken = async() => {
+            const code = new URL(window.location.href).searchParams.get('code');
+            if(!code) return;
+            
+            window.history.replaceState({}, '', window.location.pathname);
+
             try {
-                const response = await axios({
-                    method: "GET",
-                    url: `http://localhost:8080/oauth/callback/kakao?code=${code}`,
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-                    }
-                });
+                const response = await axios.get(
+                    `http://localhost:8080/oauth/callback/kakao?code=${code}`,
+                    new URLSearchParams({code}),
+                    {headers: {
+                            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+                    }}
+                );
 
                 console.log(response.data);
                 const loginSuccess = response.data.success;
@@ -57,7 +61,7 @@ export default function KakaoLoginHandler() {
             }
         };
         getToken();
-    }, [code, navigate, setLogin]);
+    }, [navigate, setLogin]);
 
     return(
         <>

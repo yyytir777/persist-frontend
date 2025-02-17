@@ -45,7 +45,6 @@ export default function Home() {
     useEffect(() => {
         const fetchLogs = async () => {
             const fetchLog = await getLogApi();
-            console.log(fetchLog);
             setLogs(fetchLog);
         }; // setIsLogIn이 변경될 때만 새로 생성
     

@@ -33,28 +33,15 @@ const Content = styled.div`
 
 function AppConent() {
     const {setLogin, setLogout} = useLoginState();
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     localStorage.setItem('URL', 'http://localhost:8080');
 
     // 로그인 시 렌더링할 때 accessToken 업데이트
     useEffect(() => {
-
-        const initLogin = async () => {
-            const accessToken = localStorage.getItem('accessToken');
-            if(!accessToken) {
-                setLogout();
-                setIsLoading(false);
-                return;
-            }
-            
-            const isLoginValid = await checkLogin();
-            if(!isLoginValid) setLogout();
-            else setLogin();
-            setIsLoading(false);
-        }
-
-        initLogin();
+        const accessToken = localStorage.getItem('accessToken');
+        if(accessToken) setLogin();
+        else setLogout();
     }, [setLogin, setLogout]);
 
     return(
