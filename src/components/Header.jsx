@@ -9,6 +9,10 @@ import { useLoginState } from "./context/LoginContext";
 import apiClient from "./api/AxiosInterceptor";
 import LoginModal from "./modal/LoginModal";
 
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
+import { IoMenu } from "react-icons/io5";
+import { FaRegUserCircle } from "react-icons/fa";
+
 const HeaderContainer = styled.div`
     height: 60px;
     position: relative;
@@ -117,19 +121,36 @@ export default function Header() {
     }
 
     return(
-        <HeaderContainer>
-            <HeaderWrapper>
-                <HeaderMenuIcon src={menuIcon} alt="menu" onClick={toggleMenu}/>
-                <HeaderLogo><a href="/" style={{textDecoration: `none`, color: `inherit`}}>Persist</a></HeaderLogo>
-                <LogInWrapper>
-                    <HeaderUserIcon src={userIcon} alt="user" onClick={handleMemberPage} />
-                    <HeaderButton onClick={isLogin ? handleLogout : openLoginModal}>
-                        {isLogin ? 'Logout' : 'LogIn'}
-                    </HeaderButton>
-                </LogInWrapper>
-            </HeaderWrapper>
+        <Navbar bg="light" className="bg-body-teriary">
+            <Container className="gap-3">
+                <IoMenu style={{height: '56px', width: '56px'}} onClick={toggleMenu}/>
+                <Navbar.Brand className="d-flex align-items-center"><h3 className="m-0">Persist</h3></Navbar.Brand>
+
+                <Container className="me-auto"></Container>
+
+                <FaRegUserCircle style={{height: '56px', width: '56px'}} onClick={handleMemberPage} />
+                {
+                    isLogin ?
+                    <Button variant="secondary" onClick={handleLogout}>Logout</Button> :
+                    <Button variant="primary" onClick={openLoginModal}>Login</Button>
+                }
+            </Container>
             {isMenuOpen && (<MenuBar toggleMenu={toggleMenu}/>)}
             <LoginModal isModalOpen={isModalOpen} closeLoginModal={closeLoginModal} />
-        </HeaderContainer>
+        </Navbar>
+        // <HeaderContainer>
+        //     <HeaderWrapper>
+        //         <HeaderMenuIcon src={menuIcon} alt="menu" onClick={toggleMenu}/>
+        //         <HeaderLogo><a href="/" style={{textDecoration: `none`, color: `inherit`}}>Persist</a></HeaderLogo>
+        //         <LogInWrapper>
+        //             <HeaderUserIcon src={userIcon} alt="user" onClick={handleMemberPage} />
+        //             <HeaderButton onClick={isLogin ? handleLogout : openLoginModal}>
+        //                 {isLogin ? 'Logout' : 'LogIn'}
+        //             </HeaderButton>
+        //         </LogInWrapper>
+        //     </HeaderWrapper>
+        //     {isMenuOpen && (<MenuBar toggleMenu={toggleMenu}/>)}
+        //     <LoginModal isModalOpen={isModalOpen} closeLoginModal={closeLoginModal} />
+        // </HeaderContainer>
     );
 }

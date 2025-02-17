@@ -28,8 +28,26 @@ apiClient.interceptors.response.use(
         const code = response?.data.code;
         const originalrequest = response.config;
 
-        if(code === 'T002') {
+        if(response?.data.success === true) return response;
+
+        if (code === 'T005') { //refershToken 만료
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            window.location.href = '/login';
+        } else if(code === 'T002') { // accessToken 만료
             console.log('accessToken Expired');
+            const reissueAccessToken = await accessTokenReissueApi(); // accessToken 재발급
+            if(reissueAccessToken) { 
+                console.log('reissue accessToken : ', reissueAccessToken);
+                localStorage.setItem('accessToken', reissueAccessToken);
+                originalrequest.headers['Authorization'] = `Bearer ${reissueAccessToken}`;
+                return apiClient(originalrequest);
+            } else {
+                localStorage.removeItem('accessToken');
+                window.location.href = '/login';
+            }
+        } else if(code === 'T001') { // Invalid JWT Token
+            console.log('accessToken is not valid');
             const reissueAccessToken = await accessTokenReissueApi();
             if(reissueAccessToken) {
                 console.log('reissue accessToken : ', reissueAccessToken);
@@ -40,11 +58,8 @@ apiClient.interceptors.response.use(
                 localStorage.removeItem('accessToken');
                 window.location.href = '/login';
             }
-        } else if (code === 'T005') {
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
-            window.location.href = '/login';
         }
+        
 
         // 나머지 실패한 응답은 예외처리
         if(response?.data.success === false) {

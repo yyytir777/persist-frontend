@@ -17,6 +17,7 @@ import Editor from './pages/Editor';
 import ReactModal from 'react-modal';
 import MemberPage from './pages/member/MemberPage';
 import DemoPage from './pages/DemoPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactModal.setAppElement('#root');
 
